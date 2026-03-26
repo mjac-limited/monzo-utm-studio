@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>UTM Studio — Monzo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --font: 'DM Sans', system-ui, sans-serif;
+  --mono: 'DM Mono', 'Fira Code', monospace;
+  --bg: #EDF0F5;
+  --surface: #FFFFFF;
+  --surface-raised: #F8FAFC;
+  --surface-hover: #F1F5F9;
+  --border: #DDE3ED;
+  --border-strong: #C8D0DC;
+  --text: #0F172A;
+  --text-2: #1E293B;
+  --text-muted: #64748B;
+  --text-subtle: #94A3B8;
+  --green: #00C48C;
+  --green-dark: #00976B;
+  --green-light: rgba(0,196,140,0.09);
+  --green-border: rgba(0,196,140,0.28);
+  --coral: #FF4F4F;
+  --radius: 14px;
+  --radius-sm: 9px;
+  --radius-xs: 7px;
+  --shadow-xs: 0 1px 2px rgba(15,23,42,0.04);
+  --shadow-sm: 0 1px 4px rgba(15,23,42,0.06),0 2px 8px rgba(15,23,42,0.04);
+  --shadow: 0 2px 12px rgba(15,23,42,0.07),0 4px 24px rgba(15,23,42,0.04);
+  --shadow-lg: 0 8px 40px rgba(15,23,42,0.10),0 2px 8px rgba(15,23,42,0.05);
+}
+
+html,body{
+  min-height:100%;
+  font-family:var(--font);
+  font-size:14px;
+  line-height:1.6;
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  background-color:var(--bg);
+  background-image:radial-gradient(circle,#C5CDD9 1px,transparent 1px);
+  background-size:26px 26px;
+}
+
+a{color:inherit;text-decoration:none}
+
+/* ── Header ── */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,0.88);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  box-shadow:var(--shadow-xs);
+}
+.header-inner{
+  max-width:900px;margin:0 auto;padding:0 28px;
+  height:62px;display:flex;align-items:center;justify-content:space-between;
+}
+.header-brand{display:flex;align-items:center;gap:13px}
+.brand-mark{
+  width:38px;height:38px;border-radius:11px;
+  background:#1A2332;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 3px 10px rgba(0,0,0,.25);flex-shrink:0;
+  overflow:hidden;padding:4px;
+}
+.brand-name{font-size:15.5px;font-weight:700;letter-spacing:-0.03em;color:var(--text);display:block;line-height:1.2}
+.brand-sub{font-size:11px;font-weight:500;color:var(--text-muted);display:block;line-height:1;margin-top:1px}
+.header-right{display:flex;align-items:center;gap:10px}
+.author-pill{
+  display:flex;align-items:center;gap:8px;
+  background:var(--surface-raised);border:1px solid var(--border);
+  border-radius:999px;padding:6px 16px 6px 12px;
+  transition:border-color .15s;
+}
+.author-pill:focus-within{border-color:var(--green)}
+.author-pill svg{color:var(--text-muted);flex-shrink:0}
+.author-pill input{
+  border:none;background:none;outline:none;
+  font-family:var(--font);font-size:13px;font-weight:500;
+  color:var(--text);width:155px;
+}
+.author-pill input::placeholder{color:var(--text-subtle);font-weight:400}
+
+/* ── Page ── */
+.page{max-width:1100px;margin:0 auto;padding:36px 28px 72px}
+.page-inner{display:flex;gap:28px;align-items:flex-start}
+
+.pg-hero{margin-bottom:28px}
+.pg-eyebrow{display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.pg-eyebrow-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-light)}
+.pg-eyebrow-text{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)}
+.pg-title{font-size:30px;font-weight:800;letter-spacing:-0.05em;color:var(--text);line-height:1.1;margin-bottom:7px}
+.pg-desc{font-size:14px;color:var(--text-muted);max-width:540px}
+.pg-desc a{color:var(--green-dark);font-weight:600;border-bottom:1.5px solid var(--green-border);padding-bottom:1px;transition:border-color .15s}
+.pg-desc a:hover{border-color:var(--green)}
+
+/* ── Side Nav ── */
+.side-nav{
+  width:186px;flex-shrink:0;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:8px;position:sticky;top:84px;
+}
+.side-nav-label{
+  font-size:10px;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--text-subtle);
+  padding:10px 12px 6px;
+}
+.tab-btn{
+  display:flex;align-items:center;gap:10px;
+  width:100%;padding:9px 12px;border-radius:8px;border:none;background:none;
+  font-family:var(--font);font-size:13px;font-weight:500;
+  color:var(--text-muted);cursor:pointer;text-align:left;
+  transition:all .18s ease;
+}
+.tab-btn svg{flex-shrink:0;opacity:.6;transition:opacity .18s}
+.tab-btn:hover{background:var(--surface-hover);color:var(--text)}
+.tab-btn:hover svg{opacity:1}
+.tab-btn.active{
+  background:var(--green-light);color:var(--green-dark);font-weight:700;
+}
+.tab-btn.active svg{opacity:1;color:var(--green-dark)}
+.side-nav-divider{height:1px;background:var(--border);margin:6px 0}
+.tab-content{flex:1;min-width:0}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeUp .26s ease}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Card ── */
+.card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);box-shadow:var(--shadow);
+  overflow:hidden;margin-bottom:16px;
+}
+.card-header{padding:22px 26px 18px;border-bottom:1px solid var(--border)}
+.card-header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.card-title{font-size:16.5px;font-weight:800;letter-spacing:-0.04em;color:var(--text)}
+.card-title-right{display:flex;align-items:center;gap:8px}
+.card-channel-tag{
+  display:inline-flex;align-items:center;height:22px;padding:0 10px;
+  border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.01em;
+}
+.card-desc{font-size:13px;color:var(--text-muted);line-height:1.65}
+
+/* ── Status dot ── */
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--border-strong);transition:all .3s}
+.status-dot.on{background:var(--green);box-shadow:0 0 0 3px var(--green-light)}
+
+/* ── Callout ── */
+.callout{
+  display:flex;gap:13px;padding:14px 22px;
+  font-size:13px;line-height:1.7;
+  border-bottom:1px solid var(--border);
+}
+.callout-icon{flex-shrink:0;margin-top:2px}
+.callout-icon svg{width:15px;height:15px}
+.callout strong{font-weight:700}
+.callout code{
+  font-family:var(--mono);font-size:11.5px;
+  padding:1px 6px;border-radius:4px;
+}
+
+/* ── All channel colours → unified red ── */
+.callout-referral,.callout-email,.callout-outreach,.callout-events,.callout-social,.callout-paid{background:rgba(245,158,11,.05)}
+.callout-referral .callout-icon,.callout-email .callout-icon,.callout-outreach .callout-icon,.callout-events .callout-icon,.callout-social .callout-icon,.callout-paid .callout-icon{color:#F59E0B}
+.callout-referral code,.callout-email code,.callout-outreach code,.callout-events code,.callout-social code,.callout-paid code{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.22);color:#B45309}
+.ch-referral,.ch-email,.ch-outreach,.ch-events,.ch-social,.ch-paid{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.22);color:#B45309}
+
+/* ── Progress ── */
+.prog-section{padding:16px 26px 0}
+.prog-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.prog-label{font-size:11.5px;font-weight:600;color:var(--text-muted)}
+.prog-pct{font-size:11.5px;font-weight:700;color:var(--text-muted);transition:color .3s}
+.prog-track{height:3px;background:var(--border);border-radius:999px;overflow:hidden}
+.prog-fill{height:100%;background:var(--green);border-radius:999px;transition:width .35s cubic-bezier(.4,0,.2,1),background .3s;width:0%}
+
+/* ── Alert ── */
+.alert-wrap{padding:14px 26px 0;display:none}
+.alert-box{
+  display:flex;align-items:flex-start;gap:10px;
+  border:1px solid rgba(239,68,68,.25);
+  background:rgba(245,158,11,.05);
+  border-radius:var(--radius-sm);padding:12px 15px;
+  font-size:13px;color:#DC2626;
+}
+.alert-box svg{flex-shrink:0;margin-top:1px}
+.alert-title{font-weight:700;margin-bottom:2px;font-size:13px}
+.alert-desc{font-size:12px;color:#F59E0B}
+
+/* ── Form body ── */
+.form-body{padding:22px 26px 26px}
+.fi{display:flex;flex-direction:column;gap:6px}
+.field-label{
+  font-size:13px;font-weight:700;color:var(--text-2);
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+}
+.field-divider{height:1px;background:var(--border);margin:20px 0}
+.field-section-title{
+  font-size:11.5px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--text-muted);margin-bottom:13px;
+}
+
+/* Badges */
+.badge-req{
+  display:inline-flex;align-items:center;height:18px;padding:0 8px;
+  border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.03em;
+  background:var(--green-light);border:1px solid var(--green-border);color:var(--green-dark);
+}
+.badge-opt{
+  display:inline-flex;align-items:center;height:18px;padding:0 8px;
+  border-radius:999px;font-size:10px;font-weight:600;letter-spacing:.03em;
+  background:var(--surface-raised);border:1px solid var(--border);color:var(--text-muted);
+}
+
+/* Param grid */
+.param-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:0}
+@media(max-width:620px){.param-grid{grid-template-columns:1fr}}
+
+/* Param panel */
+.param-panel{
+  border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--surface-raised);overflow:hidden;
+  transition:border-color .15s,box-shadow .15s;
+}
+.param-panel:focus-within{
+  border-color:var(--green-border);
+  box-shadow:0 0 0 3px rgba(0,196,140,.08);
+}
+.param-panel-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 13px 9px;
+  border-bottom:1px solid var(--border);
+  background:var(--surface);
+}
+.param-panel-name{
+  display:flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:700;color:var(--text);
+  font-family:var(--mono);letter-spacing:-0.01em;
+}
+.param-panel-name svg{color:var(--text-muted);flex-shrink:0}
+.param-panel-body{padding:10px 13px 13px;display:flex;flex-direction:column;gap:8px}
+
+/* Medium badge */
+.medium-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  height:34px;padding:0 12px;border-radius:var(--radius-xs);
+  font-size:12.5px;font-weight:700;font-family:var(--mono);
+}
+.medium-badge svg{opacity:.75;flex-shrink:0}
+.mb-referral,.mb-email,.mb-outreach,.mb-events,.mb-social,.mb-paid{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.22);color:#B45309}
+.lock-note{font-size:11.5px;color:var(--text-subtle)}
+
+/* Inputs */
+input[type="text"],input[type="url"],input[type="email"]{
+  width:100%;height:36px;padding:0 12px;
+  background:var(--surface);
+  border:1px solid var(--border-strong);
+  border-radius:var(--radius-xs);
+  font-family:var(--font);font-size:13px;color:var(--text);
+  outline:none;transition:border-color .15s,box-shadow .15s;
+}
+input[type="text"]:focus,input[type="url"]:focus,input[type="email"]:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 3px rgba(0,196,140,.12);
+}
+input::placeholder{color:var(--text-subtle)}
+input.err{border-color:#F59E0B;box-shadow:0 0 0 3px rgba(239,68,68,.10)}
+.field-locked input{opacity:.35;pointer-events:none}
+
+/* Chips */
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{
+  display:inline-flex;align-items:center;height:24px;padding:0 10px;
+  background:var(--surface);border:1px solid var(--border-strong);
+  border-radius:999px;font-size:11.5px;font-weight:500;color:var(--text-muted);
+  cursor:pointer;transition:all .12s;white-space:nowrap;
+}
+.chip:hover{background:var(--green-light);border-color:var(--green-border);color:var(--green-dark)}
+
+/* Tip */
+.tip-wrap{position:relative;display:inline-flex;align-items:center;margin-left:2px}
+.tip-icon{
+  width:14px;height:14px;border-radius:50%;
+  border:1.5px solid var(--border-strong);
+  color:var(--text-muted);font-size:9px;font-weight:700;font-style:normal;
+  display:inline-flex;align-items:center;justify-content:center;
+  cursor:default;user-select:none;font-family:var(--font);
+}
+.tip-box{
+  display:none;position:absolute;bottom:calc(100% + 9px);left:50%;
+  transform:translateX(-50%);width:220px;
+  background:var(--text);border-radius:9px;
+  padding:10px 13px;font-size:12px;font-weight:400;
+  line-height:1.55;color:rgba(255,255,255,.82);
+  box-shadow:var(--shadow-lg);z-index:200;
+  pointer-events:none;white-space:normal;text-align:left;
+}
+.tip-wrap:hover .tip-box{display:block}
+
+/* Buttons */
+.btn-primary{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  height:40px;padding:0 22px;border-radius:var(--radius-sm);border:none;
+  background:var(--green);color:white;
+  font-family:var(--font);font-size:13.5px;font-weight:700;
+  cursor:pointer;transition:all .15s;
+  box-shadow:0 3px 10px rgba(0,196,140,.3);
+}
+.btn-primary:hover{background:var(--green-dark);box-shadow:0 5px 15px rgba(0,196,140,.4);transform:translateY(-1px)}
+.btn-primary:active{transform:translateY(0)}
+.btn-primary.loading{opacity:.65;pointer-events:none}
+.btn-secondary{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  height:40px;padding:0 18px;border-radius:var(--radius-sm);
+  border:1px solid var(--border-strong);background:var(--surface);
+  color:var(--text-muted);font-family:var(--font);font-size:13.5px;font-weight:500;
+  cursor:pointer;transition:all .12s;
+}
+.btn-secondary:hover{background:var(--surface-hover);color:var(--text)}
+.spinner{
+  width:13px;height:13px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.3);border-top-color:white;
+  animation:spin .65s linear infinite;display:none;
+}
+.btn-primary.loading .spinner{display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.actions-row{display:flex;align-items:center;gap:10px}
+
+/* Output */
+.output{display:none;border-top:1px solid var(--border);animation:fadeUp .22s ease}
+.output-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 22px;
+  background:var(--green-light);
+  border-bottom:1px solid var(--green-border);
+}
+.output-header-left{display:flex;align-items:center;gap:9px}
+.output-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 8px var(--green);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.output-label{font-size:13px;font-weight:700;color:var(--green-dark)}
+.btn-copy{
+  display:inline-flex;align-items:center;gap:5px;
+  height:28px;padding:0 12px;border-radius:6px;
+  border:1px solid var(--green-border);background:white;
+  color:var(--green-dark);font-family:var(--font);
+  font-size:12px;font-weight:700;cursor:pointer;transition:all .12s;
+}
+.btn-copy:hover{background:var(--green);color:white;border-color:var(--green)}
+.output-url{
+  padding:18px 22px;background:var(--surface);
+  font-size:12.5px;line-height:2;word-break:break-all;
+  border-bottom:1px solid var(--border);
+  font-family:var(--mono);
+}
+.u-base{color:var(--text-muted)}
+.u-sep{color:var(--text-subtle)}
+.u-key{color:var(--text-muted)}
+.u-val{color:var(--text);font-weight:700}
+.output-tags{
+  display:flex;flex-wrap:wrap;gap:6px;
+  padding:13px 22px;background:var(--surface-raised);
+}
+.output-tag{
+  display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 10px;
+  background:white;border:1px solid var(--border-strong);
+  border-radius:999px;font-size:11.5px;color:var(--text-muted);
+}
+.output-tag span:first-child{color:var(--text-subtle)}
+
+/* History card */
+.hist-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);box-shadow:var(--shadow);
+  overflow:hidden;margin-bottom:16px;
+  animation:fadeUp .32s ease;
+}
+.hist-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:15px 22px;border-bottom:1px solid var(--border);
+}
+.hist-title{
+  display:flex;align-items:center;gap:8px;
+  font-size:14px;font-weight:700;color:var(--text);
+}
+.hist-count{
+  display:inline-flex;align-items:center;height:20px;padding:0 8px;
+  border-radius:999px;background:var(--surface-raised);
+  border:1px solid var(--border);font-size:11px;font-weight:600;color:var(--text-muted);
+}
+.hist-btns{display:flex;gap:6px}
+.btn-export,.btn-clear{
+  display:inline-flex;align-items:center;gap:5px;
+  height:28px;padding:0 11px;border-radius:6px;
+  font-family:var(--font);font-size:11.5px;font-weight:500;cursor:pointer;
+  transition:all .12s;white-space:nowrap;
+}
+.btn-export{border:1px solid var(--border-strong);background:none;color:var(--text-muted)}
+.btn-export:hover{background:var(--surface-hover);color:var(--text)}
+.btn-clear{border:1px solid var(--border);background:none;color:#F59E0B}
+.btn-clear:hover{background:rgba(245,158,11,.05);border-color:rgba(239,68,68,.25)}
+.hist-filters{
+  display:flex;gap:8px;flex-wrap:wrap;
+  padding:12px 22px;border-bottom:1px solid var(--border);
+  background:var(--surface-raised);
+}
+.hist-filter{
+  height:32px;padding:0 10px;
+  background:var(--surface);border:1px solid var(--border-strong);
+  border-radius:6px;font-family:var(--font);font-size:12.5px;
+  color:var(--text);outline:none;min-width:0;transition:border-color .15s;
+}
+.hist-filter:focus{border-color:var(--green)}
+.hist-filter::placeholder{color:var(--text-subtle)}
+.hist-filter-author{flex:1;min-width:100px;max-width:155px}
+.hist-filter-sm{width:108px}
+.hist-empty{padding:32px 22px;text-align:center;color:var(--text-muted);font-size:13px}
+.hist-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.hist-table th{
+  text-align:left;padding:9px 12px;font-size:11px;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);
+  border-bottom:1px solid var(--border);background:var(--surface-raised);
+  white-space:nowrap;
+}
+.hist-table td{
+  padding:10px 12px;border-bottom:1px solid var(--border);
+  vertical-align:middle;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.hist-table tr:last-child td{border-bottom:none}
+.hist-table tr:hover td{background:var(--surface-raised)}
+.hist-num{color:var(--text-subtle);font-variant-numeric:tabular-nums;width:32px}
+.hist-author{font-weight:600;color:var(--text)}
+.hist-tag{
+  display:inline-flex;align-items:center;height:20px;padding:0 7px;
+  background:var(--surface-raised);border:1px solid var(--border);
+  border-radius:999px;font-size:11px;color:var(--text-2);
+}
+.hist-date{color:var(--text-muted);font-size:11.5px;white-space:nowrap}
+.hist-url-cell{font-size:11.5px;color:var(--text-muted);max-width:200px}
+.hist-row-actions{display:flex;gap:4px}
+.hist-copy-btn{
+  display:inline-flex;align-items:center;height:24px;padding:0 8px;
+  border-radius:4px;border:1px solid var(--border);background:none;
+  color:var(--text-muted);font-family:var(--font);font-size:11px;font-weight:500;cursor:pointer;
+}
+.hist-copy-btn:hover{background:var(--green-light);border-color:var(--green-border);color:var(--green-dark)}
+.hist-del-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;border-radius:4px;border:1px solid transparent;
+  background:none;color:var(--text-subtle);cursor:pointer;
+}
+.hist-del-btn:hover{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.2);color:#F59E0B}
+
+/* Reference */
+.ref-table{width:100%;border-collapse:collapse;font-size:13px}
+.ref-table th{
+  text-align:left;padding:12px 22px;font-size:11px;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);
+  border-bottom:1px solid var(--border);background:var(--surface-raised);
+}
+.ref-table td{padding:16px 22px;border-bottom:1px solid var(--border);vertical-align:top}
+.ref-table tr:last-child td{border-bottom:none}
+.ref-table tr:hover td{background:var(--surface-raised)}
+.ref-param{font-family:var(--mono);font-weight:700;color:var(--text);font-size:13px}
+.ref-desc{color:var(--text-muted);line-height:1.7}
+.ref-examples{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.ref-chip{
+  display:inline-flex;align-items:center;height:22px;padding:0 9px;
+  border-radius:5px;background:var(--surface-raised);border:1px solid var(--border);
+  font-family:var(--mono);font-size:11px;color:var(--text-2);
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="brand-mark"><img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAIAAgADASIAAhEBAxEB/8QAHQABAAICAwEBAAAAAAAAAAAAAAYHBAgBAgMFCf/EAEIQAQABAwEGAgYIBgECBQUAAAACAQMEBQYHESExURJBMjZhdIGyFCJCYnFzscETNZGh0fBSJGQIFaLC0iMlNENT/8QAHAEBAAEFAQEAAAAAAAAAAAAAAAcBAwQFBgII/8QAMxEBAAIBAwEGBAUEAwEBAAAAAAEDAgQFETEGEiFRYXE0NcHhMjNBcqETgbHwIpHRIxT/2gAMAwEAAhEDEQA/ANZAGwa8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYu6Ld1e2oyIapqkJ2dGtS/CWTKn2Y/d71+FOfGtCxqdTXpq5ssniIdd027i/tVdpqWp0u4+jwrwpWPKeRKnlHtSnnX4U8+Fk7Tbm9l8vSp29Fsz03OjHjauVvTuQlXtKkq15V704cPb0WPi2LOLj28fHtQtWbUaQhCEeEYxp0pSj1eO9Lg9Tveqtu/qYZTjEdI/T+/m0z1rTM7RtTv6bqWPPHybMvDOEv1p3pXyr5sNtPvN2FwdsdM+zY1OzGv0bJ4f8Aol3jX+3WnnSusmtaZnaNqd/TdSx54+TZl4Zwl+tO9K+VfN6ieXX7ZueGuw8so6x9Y9GGAq2gAAAAAAAAAAAAAAAAAA+js3omp7Ra1j6Po+LPKzMiXhhCPl3rWvlSnWta9DZvRNT2i1rH0fR8WeVmZEvDCEfLvWtfKlOta16Nydz+7fTNgNF8EPBk6tkRp9MzOHX7kO0Kf3618qU5vtF2ip2eniPGyekfWfT/AD/3MUmeEa2S/wDD/sVgaLbs6/j3dW1GUeN699IuWoRl50hGFacqfe41r7Oind+O6XK2HyK6rpP8bL0C7KlKTlznjSr9mfDyr5S+FefDjuE8M7Fxs7DvYeZYt5GNfhWF21cj4ozjXlWlaV60Rft/a/cdNqv61uc54z1xmfD+36R6cKcvzxFq79t0+TsVmT1jR4XMjZ+/PlX0pYkq9ITr5x7S+FefCtaqTRoNfRuFGN9GXOM/x6T6vQAzAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYW6Td3f2pyo6lqUJ2dGtS516SyJU+zH2d5fCnPoWNTqa9NXNlk8RDvui3dXtqMiGqapCdrRrUvwlkyp9mPaPevwpz41psdi2LOLj28fHtQtWbUaQhCEeEYxp0pShiY1jExreLi2oWbFqNIW7cI8IxjTpSlHqtzPKO9x3GzXWd7LwiOkeX3AFGvEO3m7C4O2OmfZsanZjX6Nk8P/RLvGv8AbrTzpWYiq7RfnRnFlc8TDTLWdNztH1O/puo48rGTYl4Zwl+tO9K9aVYjaXefsJhbY6b4o+DH1SzGv0fI4dfuT7x/TrTzpXWXV9NzdI1K9p2o488fJsS8M4S8vb7aV8q+b3E8pC2zc8NdX5ZR1j6x6MQBVtAAAAAAAAAAAAAAB9HZvRNT2i1rH0fR8WeVmZEvDCEfLvWtfKlOta16GzeiantFrWPo+j4s8rMyJeGEI+Xeta+VKda1r0bk7n92+mbAaL4IeDJ1bIjT6ZmcOv3IdoU/v1r5UpzfaLtFTs9PEeNk9I+s+n+f+5ikzwbn92+mbAaL4IeDJ1bIjT6ZmcOv3IdoU/v1r5UpOwQbq9Xdq7srrsucp6y8gDHHhnYuNnYd7DzLFvIxr8Kwu2rkfFGca8q0rSvWjUTfrupytiM+eq6VC5kbP5E/qS6yxZV6W5+ztLz6V59dwmPqGHi6hg3sHOx7eRjX4Vt3bVyPGM4160rRvdh36/Z7+/h44T+LHz+8foRL88haW/TdRlbEZ0tV0qFzJ2fvz+pPrLFlXpCde3aXn0rz61anXQa+jX0Y30Zc4z/vE+r2AMwAAAAAAAAAAAAAAAAAAAAAAAAAWFuk3d39qcqOpalCdnRrUudeksiVPsx9neXwpz6FjU6mvTVzZZPEQbpN3d/anKjqWpQnZ0a1LnXpLIlT7MfZ3l8Kc+myOJjWMTGt4uLahZsWo0hbtwjwjGNOlKUMTGsYmNbxcW1CzYtRpC3bhHhGMadKUo9VuZ5R5uO42a6zvZeGMdI/39QBRrgAAABDN5+wmFtjpvij4MfVLMa/R8jh1+5PvH9OtPOlZmKrtF+dGcWVzxMNMtX03N0jUr2najjzx8mxLwzhLy9vtpXyr5sRtLvP2EwtsdN8UfBj6pZjX6PkcOv3J94/p1p50rrLq+m5ukale07UceePk2JeGcJeXt9tK+VfN7ieUhbZueGuw8so6x9Y9GIAq2gAAAAAAAAAAz9ntG1LaDWMfSNIxJ5WZkS8Nu3H+9a18qUpzrWvKlDZ7RtS2g1jH0jSMSeVmZEvDbtx/vWtfKlKc61rypRuRuc3a6bsBo/2MrWMiNPpeXw+Pghx6Qp/WtedfKlOc7Rdoqdnp87J6R9Z9P8APSPSkzw53ObttN3f6NWlKwytYyY0+mZfD4+CHaFP61rzr5UpPQQZq9XdrLsrrsucp6y8gDHAAAAGPqGHi6hg3sHOx7eRjX4Vt3bVyPGM4160rRqJv03UZWxGdLVdKhcydn78/qT6yxZV6QnXt2l59K8+u4bH1DDxdQwb2DnY9vIxr8K27tq5HjGca9aVo3uw79fs9/fw8cJ/Fj5/fykieH55C0N+m6vK2H1GWp6ZC5kbP5E//p3PSljSr/8ArnXt2l59K8+tXp20Ouo19GN9GXOM/wC8T6w9gDLAAAAAAAAAAAAAAAAAAAAAAE93RbA3Nr86Wbm1rb0jFueG7WNeErs+FK+CnblWnGvavLry2Vw8axh4trFxbULNi1CkLduFOFIxp0pRR24XaaOj6Zfwsz/8K9l1l4/O3Lwwpx9tOVOK9bc43IRnCVJRlTjGVK8aVp3LMMseJnpKPt91Ntuqywyn/jj0dgFppQAAAAAAABDN5+wmFtjpvij4MfVLMa/R8jh1+5PvH9OtPOlZmKrtF+dGcWVzxMNMtX03N0jUr2najjzx8mxLwzhLy9vtpXyr5sRtLvP2EwtsdN8UfBj6pZjX6PkcOv3J94/p1p50rrLq+m5ukale07UceePk2JeGcJeXt9tK+VfN7ieUhbZueGuw8so6x9Y9GIAq2gAAAAAAz9ntG1LaDWMfSNIxJ5WZkS8Nu3H+9a18qUpzrWvKlDZ7RtS2g1jH0jSMSeVmZEvDbtx/vWtfKlKc61rypRuRuc3a6bsBo/2MrWMiNPpeXw+Pghx6Qp/WtedfKlOc7Rdoqdnp87J6R9Z9P89I9KTPBuc3a6bsBo/2MrWMiNPpeXw+Pghx6Qp/WtedfKlJ8CDNXq7tZdlddlzlPWXkAY4AAAAAAAAxtSwcTUsC/gZ+NbycXIhW3dtXI8YzjXrStGn2/Xdje2B1WGZgzlf0PNuVpjzlXjOzPhx/hy78uPCvnSnejce7chatyu3ZxhCFKylKVeFKUp1rWrWj/wAT+1sdf0rEwsKn/wBvx82kozrTndn4J08Xsp14fj/TtOw+o1leviur8vL8Xl6f3Zml0N+orstrx/44RzM/pH3lQgCamMAAAAAAAAAAAAAAAAAAAAAAnOwEeOiXq/8AcS+WKzNh9qp6Vcjp+oTrLBlXhCdedbNf/j7Fc7uY8dCve8y+WL79yDe10426fHHJHO6zE6yyJ818W5xuQjOEqSjKnGMqV40rTu7Kt2H2qnpU46fqE5SwZV4QlXnWzX/4+zyWhbnG5Ck4SpKMqcYypXjStO7SajT5U5cS1eWPDsAsKAAAAAAAACGbz9hMLbHTfFHwY+qWY1+j5HDr9yfeP6daedKzMVXaL86M4srniYaY6vp2bpOpX9O1HHnj5ViXhuQl5e320r1pXzYraPejsFhbYad/Et+DH1WxH/p8jhylT/hPvH2+X9aV1m1XT83StRv6fqGPPHyrEvDctzpzpX96e3ze4nlIe2bnXrq/LKOsfWPRigKtmAAM/Z7RtS2g1jH0jSMSeVmZEvDbtx/vWtfKlKc61rypQ2e0bUtoNYx9I0jEnlZmRLw27cf71rXypSnOta8qUbkbnN2um7AaP9jK1jIjT6Xl8Pj4IcekKf1rXnXypTnO0XaKnZ6fOyekfWfT/PSPSkzwbnN2um7AaP8AYytYyI0+l5fD4+CHHpCn9a1518qUnwIM1eru1l2V12XOU9ZeQBjgAAAAAAAA6XbkLVuV27OMIQpWUpSrwpSlOta1LtyFq3K7dnGEIUrKUpV4UpSnWtaqe3hbY3Ncuy03TZShpsK/Wl0rfrTzr93tT419mw27brNdZ3cfCI6z5fdutj2O/d7/AOnX4Yx+LL9Ij/3yhxvC2yua5dlpumylDTYV+tLpW/WnnX7vanxr7Ke3tw8OzuLX/uqfJJN7Fr2Ijvlh4dmsT3ynyTSjsunq0t1dVUcRz/syljd9to27YbqKI4iMf7zPMeM+qpwHeoQAAAAAAAAAAAAAAAAAAAAAAWFu0px0G971L5YpJOKObsv5De96l8sUorTi6TSR/wDHFGW7zxrrPdh3IJPsRtVPSpxwNQnKWDKv1Z9a2a//AB9j4E4se5BW6nG3Hu5MTHKJjiV72pwuW43LcozhKlKxlGvGlaV86OyrNiNqZ6Tcjg50pTwZV+rLrWzXvT2exaNucLluNy3Kk4SpxjKleNK07ud1Gnypy4no8zHDsAx1AAAAAAAABCt6OwWFthp38S34MfVbEf8Ap8jhylT/AIT7x9vl/WlZqKrtF9lFkWVzxMNMdV0/N0rUb+n6hjzx8qxLw3Lc6c6V/ent82K2j3o7BYW2GnfxLfgx9VsR/wCnyOHKVP8AhPvH2+X9aV1m1XT83StRv6fqGPPHyrEvDctzpzpX96e3ze4nlIe2bnXrq/LKOsfWPRis7QdI1HXdXx9J0nEuZWZkz8Nu3CnX217Up1rWvKlDQdI1HXdXx9J0nEuZWZkz8Nu3CnX217Up1rWvKlG425rdnp2wGkeKX8PK1rIhT6Xl8Onn/Dhx6Rp/WtedfKlOd7Rdoqdnp87J/Dj9Z9P89I9NlM8OdzO7TT9gNHrWVYZWs5MafS8qlOVPP+HDtGlfjWvOvlSlgAg3Way7WXZX35c5T1eQBjAAAAAAAAA6XrluzanduzjbtwpWUpSrwpGlOta1L1y3ZtTu3Zxt24UrKUpV4UjSnWtaqd3gbYXddvS0/T5St6bCXOvSt+tPOv3e1PjX2bDbtus11ndx8IjrPl9272LYr93v/p1+GMfiy/SI/wDfKDeBtjd1y9LT9OnO3psK869K36086/d7U+NfZFrFr2ObFpmWrfBIdFFWlqiqqOIj/fFO23bdRt9EUUY8RH/c+s+patoTvtjw2Zw/fKfJNPox4UQPfh6s4fvkfkmz9tnnV4e7A7UfKL/b6wp8B3iAAAAAAAAAAAAAAAAAAAAAAAFh7sv5De96l8sUqRXdl/Ib3vUvlilTpNJ+TijHePjrPdxWjynHi9nFacWRw10Tww7kEl2I2pnpNyODnSlPBlX6sutbNe/4ez/a/CnHix7kFi6nG3Hu5L2OXMcSva3OFy3G5blGcJU4xlGvGlad6OyrdidqZ6Tcjg50pTwZV+rLrWzXv+Hei0Lc4XLcbluUZQlSlYyjXjStO7ndRp8qMuJ6KTHDsAx1AAAAAAAABCt5+wOFtjgUnbrDG1WzHhYyK05Sp/wnw6x/vTy86VmpH0qfiTPEcr2nvsosiyueJh03N7s9N2A0nxSrby9ayI0+lZdKcqU//nDjzpCn9a1518qUsAHzfrNZdrLsr78ucpSkAMYAAAAAAAAHS9ct2bU7t2cbduFKylKVeFKUp1rWpfu27Fmd69cjbtwjWUpSrwpGlPOtVPbfbYXddu1wMCsremwlzr0rfrTzr93tT419mw27brNdZ3cfCI6z5fdu9i2K/d7+5X4Yx+LL9I+/lBvA2wu67elp+nylb02Eudelb9aedfu9qfGvsi9m17HNm105Mu1b4JCooq0tUVVRxEJ327bqNvoiiiOMY/7n1n1LVtkRjwoRpwcvUzyzxAd+Hqzh++R+SafIDvw9WcP3yPyTZu2fF4e7QdqflF/t9YU+A71AAAAAAAAAAAAAAAAAAAAAAACw92X8hve9S+WKVIruy/kN73qXyxSp0mk/JxRjvHx1nuAMlrXFacXnOPF6uK04qKxPDEuQSTYram5pNyOFnSlPAlXlXrWzXvT2d6f09vwpx4vC5BZupxtx7uS9jlz4SvS1chdtxuW5xnCVKVjKNeNK0r50d1WbFbUXNIu0ws2Up4Mq8q9a2q96ezvT/a2hauQu243Lc4zhKlKxlGvGlaV86Oc1Gnyoy4nopMcO4DHUAAAAAACPpU/EI+lT8VMukqx1T0B8zpXAAAAAAAAHS/dtWLM7165G3bhGspTlXhSNKda1qX7tuxZnevXI27cI1lKUq8KRpTzqp7b7a67r1+uDgylb02EvwrerTzr7O1PjX2bDbtus11ndx8IjrPl9282LYr94v7mHhjH4svL7+UONvtrruvX64ODKVvTYS/Ct6tPOvs7U+NfZGrNr2Fm17GZat8EhUUV6WuKqo4iE7bdt1G30Y0UY8Yx/PrPq4tW3vSnApTg5VmeWeAAIDvw9WcP3yPyTT5Ad+Hqzh++R+SbO2z4vD3aDtT8ov9vrCnwHeoAAAAAAAAAAAAAAAAAAAAAAAWHuy/kN73qXyxSpFd2X8hve9S+WKVOk0n5OKMd4+Os9wBktaAA4rTi6Ti9HFacRWJ4YtyCR7FbT3NIu0ws2Up4Mq8q9a2q96ezvT4/j8OUXhcgsXU42493Jdxy58JXnauQu243Lc4zhKlKxlGvGlad6O6i9md4lzZfaeukarKVzR7tI1pLhxljSr9qnePenxp50reGPetZFi3fsXIXbVyNJQnCXGMqV50rSvnRzFtf9POcfJkX6SyjHHLKPDKOYl6ALbGAAAACPpU/EI+lT8VMukqx1T0B8zpXAAAAAAHS/dt2LM7165G3bhGspSlXhSNKedXnnZWNg4d7MzL9vHxrEKzu3bkvDGEac61rWvSjXHaLerkbcbb/+T6TKdjZ/HtzrGlacJZUqcPry7R7R+NefKm32nZr9yyy7kcY4+OU+X3nyZ226P/8Abq69PM8d6Yjn3THb3a67rt+uDgylb02EvwrerTzr7O1PjX2Rqza9jmza9jLtW+DuqKK9LXFVUcRD6F27bqNvoxoox4xj+fWfUt23tSnApTgPUzyzgAAABAd+Hqzh++R+SafIDvw9WcP3yPyTZ22fF4e7QdqflF/t9YU+A71AAAAAAAAAAAAAAAAAAAAAAACw92X8hve9S+WKVIruy/kN73qXyxSp0mk/JxRjvHx1nuAMlrQAAAHFebpKL0cArLb+nDaKf5cUp3Q7x7uzV+Gk6tcnd0e5L6sussatfOnePenxp50rGN4VOG0k/wAqH6I85jVR/wDXL3SVpdNXqtvrrsjmJxhupj3rWRYt37FyF21cjSUJwlxjKledK0r50ejW3dJvHv7M34aVqs53tGuS5V6yxq1+1HvHvT407V2Nxb9nKx7eRj3YXbN2NJwnCXGMo16VpVizHDitx26zQ2d3Lxiek+f3eoCjXgABH0qfiEfSp+KmXSVY6p6A+Z0rgAAADwzsrGwcO9mZl+3j41iFZ3btyXhjCNOda1rXpQzsrGwcO9mZl+3j41iFZ3btyXhjCNOda1rXpRqNv23sZO2uZPR9Hncx9n7E+VPRllyp0nOnlHtH4158KU3uw7DfvF/cw8MI/Fl5ffygiDftvYydtcyej6PO5j7P2J8qejLLlTpOdPKPaPxrz4UpGt0VPFtfSn/bz/ZD0z3OU47ZU92ufsmmdBRt+3ZUUY8YxE/39Z9W97OfNdP+6FzW4PWlOBTkOMfQgAAAAAAgO/D1Zw/fI/JNPkB34erOH75H5Js7bPi8PdoO1Pyi/wBvrCnwHeoAAAAAAAAAAAAAAAAAAAAAAAWHuy/kN73qXyxSpFd2X8hve9S+WKVOk0n5OKMd4+Os9wBktaAAAAAArTeH6yT/ACofojqRbw/WSf5UP0R1zOp/Oy90o7X8HV+2BYu6LeLe2XyIaXqk53tGuy/GWNKv2o/d70+NOfGla6FhkanTV6mua7I5iW6eLfs5WPbyMe7C7ZuxpOE4S4xlGvStKvVrZui3i3tl8iGl6pOd7RrsvxljSr9qP3e9PjTnxpXY7Fv2crHt5GPdhds3Y0nCcJcYyjXpWlVuY4R3uO3WaGzu5eMT0nz+71AUa8I+lT8Qj6VPxUy6SrHVPQHzOlcAAeGdlY2Dh3szMv28fGsQrO7duS8MYRpzrWta9KGdlY2Dh3szMv28fGsQrO7duS8MYRpzrWta9KNRt+29jJ21zJ6Po87mPs/Ynyp6MsuVOk508o9o/GvPhSm92HYb94v7mHhhH4svL7+UEQb9t7GTtrmT0fR53MfZ+xPlT0ZZcqdJzp5R7R+NefClKqBOug0FG30Y0UY8Yx/PrPq9iabmvXKnu1z9kLTTc165U92ufsbj8LZ7S3XZz5rp/wB0LqAcA+hAAAAAABAd+Hqzh++R+SafIDvw9WcP3yPyTZ22fF4e7QdqflF/t9YU+A71AAAAAAAAAAAAAAAAAAAAAAACw92X8hve9S+WKVIruy/kN73qXyxSp0mk/JxRjvHx1nuAMlrQAAAAAFabw/WSf5UP0R1It4frJP8AKh+iOuZ1P52XulHa/g6v2wALDPFi7ot4t7ZfIhpeqTne0a7L8ZY0q/aj93vT4058aVroFjU6avU1zXZHMS3Txb9nKx7eRj3YXbN2NJwnCXGMo16VpV6tbN0W8W9svkQ0vVJzvaNdl+MsaVftR+73p8ac+NK7HYt+zlY9vIx7sLtm7Gk4ThLjGUa9K0qtzHCO9x26zQ2d3Lxiek+f3epH0qfiEfSp+Lzl0lgR1T0B8zpXHhnZWNg4d7MzL9vHxrEKzu3bkvDGEac61rWvShnZWNg4d7MzL9vHxrEKzu3bkvDGEac61rWvSjUbftvYydtcyej6PO5j7P2J8qejLLlTpOdPKPaPxrz4Upvdh2G/eL+5h4YR+LLy+/lBEG/bexk7a5k9H0edzH2fsT5U9GWXKnSc6eUe0fjXnwpSqgTroNBRt9GNFGPGMfz6z6vYAzATTc165U92ufshaabmvXKnu1z9mHuPwtntLddnPmun/dC6gHAPoQAAAAAAQHfh6s4fvkfkmnyA78PVnD98j8k2dtnxeHu0Han5Rf7fWFPgO9QAAAAAAAAAAAAAAAAAAAAAAAsPdl/Ib3vUvlilSK7sv5De96l8sUqdJpPycUY7x8dZ7gDJa0AAAAABWm8P1kn+VD9EdSLeH6yT/Kh+iOuZ1P52XulHa/g6v2wALDPAAFi7ot4t7ZfIhpeqTne0a7L8ZY0q/aj93vT4058aVroFjU6avU1zXZHMS3Txb9nKx7eRj3YXbN2NJwnCXGMo16VpV6x9Kn4tbN0W8W9svkQ0vVJzvaNdl+MsaVftR+73p8ac+NK7H4l+zlWbWRj3YXbN2lJwnCXGMo16VpVazjiJR5uG3WaG3u5eMT0nz+6wXhnZWNg4d7MzL9vHxrEKzu3bkvDGEac61rWvShnZWNg4d7MzL9vHxrEKzu3bkvDGEac61rWvSjUbftvYydtcyej6PO5j7P2J8qejLLlTpOdPKPaPxrz4UpAew7DfvF/cw8MI/Fl5ffyhI8Qb9t7GTtrmT0fR53MfZ+xPlT0ZZcqdJzp5R7R+NefClKqBOug0FG30Y0UY8Yx/PrPq9gDMAABNNzXrlT3a5+yFppua9cqe7XP2Ye4/C2e0t12c+a6f90LqAcA+hAAAAAABAd+Hqzh++R+SafIDvw9WcP3yPyTZ22fF4e7QdqflF/t9YU+A71AAAAAAAAAAAAAAAAAAAAAAACfbsMiFdOysXjTxwvfxOHsrSlP/AGpep/RNTv6TqEMuxz4cpwr0nHzotTSNRxtUw45WLPjGvKUa9Y17Vb3QX451xh+sOB7Q6DOrUTfEf8cv4lmANg50AAAAABWm8P1kn+VD9EdSLeH6yT/Kh+iOuZ1P52XulHa/g6v2wALDPAAAAE83a7y9S2QtVwb1iuo6bWvijZlc8MrUvOsa8K8KV86cP6c+MDFJjnwlZv09eow7lkcwsre9ve1fb21DTrONXStIhWkpY0LvjlelTpWcuFONKeUeHCnt5cK1Bi6LQ6fQ0xTp8e7jH+/3XgBlgAAAAmm5r1yp7tc/ZC003NeuVPdrn7MPcfhbPaW67OfNdP8AuhdQDgH0IAAAAAAK4355duOmafgcafxJ3q3eHakY1p/7v7JrtHrWDoOmzzs65wjTlCFPSuS/40ULtLrWVr2r3dQy+FKy+rCFK8rcadI0/wB68W72XR52XRdP4cf8uG7b7zTp9Hlo8Z5sz48PKOes+/SHzQHYIaAAAAAAAAAAAAAAAAAAAAAAGfoWrZOkZlMixXjGvK5brXlOn++bAHrHKcZ5h4tqwtwnDOOYlcOkajjaphxysWfGNeUo16xr2qzFQ6Fq2TpGZTIsV4xryuW615Tp/vmtLSNSxdUw45OLPjGvKUa9YV7Vb/SauLo4nqjzd9oz0Ofex8cJ6T5ekswBmNKAAAArTeH6yT/Kh+iOpFvD9ZJ/lQ/RHXM6n87L3SjtfwdX7YAFhngAAAAAAAAAAAAACabmvXKnu1z9kLTTc165U92ufsw9x+Fs9pbrs5810/7oXUA4B9CAAAAD5u0etYOg6bPOzrnCNOUIU9K5L/jRxtLrmDoGmyzc2fLpbt09K5LtT/eSiNp9dztoNSlm5s+XS1apX6tuPan+fNtdt23LV5d7Lwxj+fSHKdpu01e01/06/G2ekeXrP0j9XO1GvZ20OpSzMyXCNOVq1Sv1bce1P3r5vlA7PDDGvGMcY4iEI332aizK23LnKfGZkAe1oAAAAAAAAAAAAAAAAAAAAAAAAZ2iark6Rm0yMeXGleVy3WvKdO1f8sEescpxnmOrxZXhbhOGccxK4NH1LG1XCjk40uNK8pRr1hXtVmqg0TVcnSM2mRjy40ryuW615Tp2r/laWj6ljarhRycaXGleUo16wr2q3+k1cXRxPVHm77Rnoc+9j44T0ny9JZoDMaUABWm8P1kn+VD9EdSLeH6yT/Kh+iOuZ1P52XulHa/g6v2wALDPAAAAAAAAAAAAAAE03NeuVPdrn7IWmm5r1yp7tc/Zh7j8LZ7S3XZz5rp/3QuoBwD6EAAHzNpdcwdA02Wbmz5dLdunpXJdqf7yNpdcwdA02Wbmz5dLdunpXJdqf7yURtNrmdr+pSzc2fLpbt0r9W3HtT/Pm2u27blqsu9l4YR/PpDk+03aavaa/wCnX42z0jy9Z+kfqbTa5na/qUs3Nny6W7dK/Vtx7U/z5vlg7TDDGvGMcY4iEJX32aiybbZ5ynxmZAHpaAAAAAAAAAAAAAAAAAAAAAAAAAAAAGdomq5OkZtMjHlxpXlct1rynTtX/LBHrHKcZ5jq8WV4W4ThnHMSuDR9SxtVwo5ONLjSvKUa9YV7VZqoNE1XJ0jNpkY8uNK8rluteU6dq/5Wlo+p4uq4ccnFnxp0lGvpQr2q3+k1cXRxPVHm77Rnoc+9j44T0ny9JZoDMaVWm8P1kn+VD9EdSLeH6yT/ACofojrmdT+dl7pR2v4Or9sACwzwAAAAAAAAAAAAABNNzXrlT3a5+yFppua9cqe7XP2Ye4/C2e0t12c+a6f90LqAcA+hB8zaXXMHQNNlm5s+XS3bp6VyXan+8nXafXcHZ/TJZubPn0tWqV+tcl2p/nyUTtJrmdr+pSzc25x8rduno249qf7zbXbdty1WXey8MI/n0hyfabtPXtNf9KrxtnpHl6z9I/VztNrmdr+pSzc2fLpbt0r9W3HtT/Pm+WDtMMMa8YxxjiIQlffZqLJttnnKfGZkAeloAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZ2i6plaTmxycaXsnCvSdO1WCK45TjPMdXiyvG3GcM45iVv6LqeLquFHJxpeycK9YV7VZyoNF1TK0nNjk40vZOFek6dqp/Z2v0SeLS9O/O3PhztVt1rKle3KnCre6bW4WY/8AOeJcDuexXaezmnGcsZ6ceMx6T/6im8P1kn+VD9EdZ+0Go11XVr2Z4KwjLhSEa9aRpThRgNNflGVmWUebttBVlVpq8M+sRAAtMsAAAAAAAAAAAAAATTc165U92ufshb7Gxutf+QbQWNRlbrctUpWF2FOtY168Pb0r8GNrK8rKM8MesxLZ7LqK9NuFN1k8Y45RM+3LYZ8rafXcHZ/TJZubPn0tWqV+tcl2p/nyfGzN4uzNnBrkWcueRd8PGNiNqVJVr2rWtOFP96qi2k1vO17U55ubPjXpbt09G3HtT/ebldBtFl2fNsTjjH8pY3/tfptFRxpM4zsy6cTzEes8fxBtJredr2pzzc2fGvS3bp6NuPan+83zAdjhhjhjGOMcRCGbrrL7JssnnKfGZkAeloAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//2Q==" alt="Monzo" style="width:28px;height:28px;object-fit:contain;"/></div>
+      <div>
+        <span class="brand-name">UTM Studio</span>
+        <span class="brand-sub">Monzo Marketing</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="author-pill">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <input type="text" id="global-author" placeholder="Your name" autocomplete="name" oninput="saveAuthor()"/>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+  <div class="pg-hero">
+    <div class="pg-eyebrow">
+      <div class="pg-eyebrow-dot"></div>
+      <span class="pg-eyebrow-text">Analytics · GA4</span>
+    </div>
+    <h1 class="pg-title">UTM Link Builder</h1>
+    <p class="pg-desc">Build tracked URLs for Monzo's GA4 analytics. See the <a href="#" onclick="sw('reference',this);return false;">Reference tab</a> for a full parameter guide.</p>
+  </div>
+
+  <div class="page-inner">
+  <!-- ── Side Nav ── -->
+  <nav class="side-nav">
+    <div class="side-nav-label">Channels</div>
+    <button class="tab-btn active" onclick="sw('sales',this)">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Outreach
+    </button>
+    <button class="tab-btn" onclick="sw('referral',this)">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      Referral
+    </button>
+    <button class="tab-btn" onclick="sw('email',this)">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      Email
+    </button>
+    <button class="tab-btn" onclick="sw('events',this)">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Events
+    </button>
+    <button class="tab-btn" onclick="sw('paid',this)">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8M12 6v2m0 8v2"/></svg>
+      Paid
+    </button>
+    <div class="side-nav-divider"></div>
+    <button class="tab-btn" onclick="sw('reference',this)">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      Reference
+    </button>
+  </nav>
+
+  <!-- ── Tab Content ── -->
+  <div class="tab-content">
+
+  <!-- ═══════════════════════════════════════════
+       REFERRAL
+  ═══════════════════════════════════════════ -->
+  <div id="tab-referral" class="tab-panel">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-top">
+          <span class="card-title">Referral</span>
+          <div class="card-title-right">
+            <span class="card-channel-tag ch-referral">referral</span>
+            <span class="status-dot" id="p-status"></span>
+          </div>
+        </div>
+        <div class="card-desc">For links placed on MoneySavingExpert, comparison sites, and co-marketing partner assets.</div>
+      </div>
+      <div class="callout callout-referral">
+        <div class="callout-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></div>
+        <div><strong>When to use this:</strong> A comparison site or partner is adding a link to Monzo. Use the partner domain as <code>utm_source</code>. Medium is locked to <code>referral</code> so GA4 channel grouping stays clean and consistent.</div>
+      </div>
+      <div class="prog-section">
+        <div class="prog-meta"><span class="prog-label">Required fields</span><span class="prog-pct" id="p-prog-pct">0%</span></div>
+        <div class="prog-track"><div class="prog-fill" id="p-prog-bar"></div></div>
+      </div>
+      <div class="alert-wrap" id="p-alert"><div class="alert-box"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div><div class="alert-title" id="p-alert-title">Unable to generate link</div><div class="alert-desc" id="p-alert-desc"></div></div></div></div>
+      <div class="form-body">
+        <div class="fi">
+          <label class="field-label">Destination URL <span class="tip-wrap"><i class="tip-icon">i</i><span class="tip-box">The page visitors land on — must start with https://</span></span><span class="badge-req">REQUIRED</span></label>
+          <input type="url" id="p-url" placeholder="https://monzo.com/"/>
+          <div class="chips">
+            <span class="chip" onclick="f('p-url','https://monzo.com/')">monzo.com</span>
+            <span class="chip" onclick="f('p-url','https://monzo.com/refer-a-friend')">refer a friend</span>
+            <span class="chip" onclick="f('p-url','https://monzo.com/features')">features</span>
+            <span class="chip" onclick="f('p-url','https://monzo.com/download')">download</span>
+            <span class="chip" onclick="f('p-url','https://monzo.com/business')">business</span>
+            <span class="chip" onclick="f('p-url','https://help.monzo.com/')">help centre</span>
+          </div>
+        </div>
+        <div class="field-divider"></div>
+        <div class="field-section-title">UTM Parameters</div>
+        <div class="param-grid">
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>utm_source</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="text" id="p-source" placeholder="moneysavingexpert.com"/><div class="chips"><span class="chip" onclick="f('p-source','moneysavingexpert.com')">MSE</span><span class="chip" onclick="f('p-source','comparethemarket.com')">comparethemarket</span><span class="chip" onclick="f('p-source','money.co.uk')">money.co.uk</span><span class="chip" onclick="f('p-source','gocompare.com')">gocompare</span><span class="chip" onclick="f('p-source','which.co.uk')">which.co.uk</span></div></div></div>
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>utm_medium</span></div><div class="param-panel-body"><input type="hidden" id="p-medium" value="referral"/><div class="medium-badge mb-referral"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>referral</div><div class="lock-note">Locked — keeps GA4 channels consistent.</div></div></div>
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>utm_campaign</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="text" id="p-campaign" placeholder="refer_a_friend"/><div class="chips"><span class="chip" onclick="f('p-campaign','refer_a_friend')">refer_a_friend</span><span class="chip" onclick="f('p-campaign','partner_2026')">partner_2026</span><span class="chip" onclick="f('p-campaign','flex_launch')">flex_launch</span><span class="chip" onclick="f('p-campaign','business_launch')">business_launch</span></div></div></div>
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>utm_content</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="text" id="p-content" placeholder="hero_banner"/><div class="chips"><span class="chip" onclick="f('p-content','hero_banner')">hero_banner</span><span class="chip" onclick="f('p-content','comparison_table')">comparison_table</span><span class="chip" onclick="f('p-content','review_article')">review_article</span><span class="chip" onclick="f('p-content','sidebar_link')">sidebar_link</span><span class="chip" onclick="f('p-content','cta_button')">cta_button</span></div></div></div>
+        </div>
+        <div class="field-divider"></div>
+        <div class="actions-row">
+          <button class="btn-primary" onclick="gen('p')"><span class="spinner"></span>Generate Link</button>
+          <button class="btn-secondary" onclick="clr('p')">Clear</button>
+        </div>
+      </div>
+      <div class="output" id="p-out"><div class="output-header"><div class="output-header-left"><span class="output-dot"></span><span class="output-label">Generated URL</span></div><button class="btn-copy" id="p-cb" onclick="cp('p')"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div><div class="output-url" id="p-disp"></div><div class="output-tags" id="p-tags"></div></div>
+    </div>
+    <div class="hist-card" id="p-hist-card">
+      <div class="hist-header"><div class="hist-title"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="12 8 12 12 14 14"/><path d="M3.05 11a9 9 0 1 0 .5-3M3 4v4h4"/></svg>Link History<span class="hist-count" id="p-hist-count">0</span></div><div class="hist-btns"><button class="btn-export" onclick="exportHistory('p')"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV</button><button class="btn-clear" onclick="clearHistory('p')"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>Clear all</button></div></div>
+      <div class="hist-filters"><input class="hist-filter hist-filter-author" placeholder="Filter by author…" oninput="drawHistory('p')" id="p-f-author"/><input class="hist-filter hist-filter-sm" placeholder="Source…" oninput="drawHistory('p')" id="p-f-source"/><input class="hist-filter hist-filter-sm" placeholder="Medium…" oninput="drawHistory('p')" id="p-f-medium"/><input class="hist-filter hist-filter-sm" placeholder="Campaign…" oninput="drawHistory('p')" id="p-f-campaign"/><input class="hist-filter hist-filter-sm" placeholder="Content…" oninput="drawHistory('p')" id="p-f-content"/></div>
+      <div id="p-hist-body"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       EMAIL
+  ═══════════════════════════════════════════ -->
+  <div id="tab-email" class="tab-panel">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-top"><span class="card-title">Email Campaign Links</span><div class="card-title-right"><span class="card-channel-tag ch-email">email</span><span class="status-dot" id="e-status"></span></div></div>
+        <div class="card-desc">For links in Monzo's marketing newsletters, product updates, and onboarding sequences.</div>
+      </div>
+      <div class="callout callout-email">
+        <div class="callout-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div><strong>When to use this:</strong> You're sending a campaign email and want to track clicks in GA4. Use <code>email</code> as the medium and the sending platform as <code>utm_source</code>. Use <code>utm_content</code> to tell apart CTAs — e.g. <code>hero_cta</code> vs <code>footer_link</code>.</div>
+      </div>
+      <div class="prog-section"><div class="prog-meta"><span class="prog-label">Required fields</span><span class="prog-pct" id="e-prog-pct">0%</span></div><div class="prog-track"><div class="prog-fill" id="e-prog-bar"></div></div></div>
+      <div class="alert-wrap" id="e-alert"><div class="alert-box"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div><div class="alert-title" id="e-alert-title">Unable to generate link</div><div class="alert-desc" id="e-alert-desc"></div></div></div></div>
+      <div class="form-body">
+        <div class="fi">
+          <label class="field-label">Destination URL <span class="tip-wrap"><i class="tip-icon">i</i><span class="tip-box">The page visitors land on — must start with https://</span></span><span class="badge-req">REQUIRED</span></label>
+          <input type="url" id="e-url" placeholder="https://monzo.com/"/>
+          <div class="chips"><span class="chip" onclick="f('e-url','https://monzo.com/')">monzo.com</span><span class="chip" onclick="f('e-url','https://monzo.com/features')">features</span><span class="chip" onclick="f('e-url','https://monzo.com/download')">download</span><span class="chip" onclick="f('e-url','https://monzo.com/blog')">blog</span><span class="chip" onclick="f('e-url','https://monzo.com/features/savings')">savings</span><span class="chip" onclick="f('e-url','https://community.monzo.com/')">community</span></div>
+        </div>
+        <div class="field-divider"></div>
+        <div class="field-section-title">UTM Parameters</div>
+        <div class="param-grid">
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>utm_source</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="text" id="e-source" placeholder="customer.io"/><div class="chips"><span class="chip" onclick="f('e-source','customer.io')">customer.io</span><span class="chip" onclick="f('e-source','braze')">braze</span><span class="chip" onclick="f('e-source','mailchimp')">mailchimp</span><span class="chip" onclick="f('e-source','sendgrid')">sendgrid</span></div></div></div>
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>utm_medium</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="hidden" id="e-medium" value="email"/><div class="medium-badge mb-email"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>email</div><div class="lock-note">Locked — always email for campaigns.</div></div></div>
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>utm_campaign</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="text" id="e-campaign" placeholder="monthly_digest"/><div class="chips"><span class="chip" onclick="f('e-campaign','monthly_digest')">monthly_digest</span><span class="chip" onclick="f('e-campaign','product_update')">product_update</span><span class="chip" onclick="f('e-campaign','welcome_series')">welcome_series</span><span class="chip" onclick="f('e-campaign','flex_launch')">flex_launch</span></div></div></div>
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>utm_content</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="text" id="e-content" placeholder="hero_cta"/><div class="chips"><span class="chip" onclick="f('e-content','hero_cta')">hero_cta</span><span class="chip" onclick="f('e-content','footer_link')">footer_link</span><span class="chip" onclick="f('e-content','feature_card')">feature_card</span><span class="chip" onclick="f('e-content','referral_cta')">referral_cta</span></div></div></div>
+        </div>
+        <div class="param-grid" style="margin-top:12px">
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>utm_term</span><span class="badge-opt">OPTIONAL</span></div><div class="param-panel-body"><input type="text" id="e-term" placeholder="existing_customers"/><div class="chips"><span class="chip" onclick="f('e-term','existing_customers')">existing_customers</span><span class="chip" onclick="f('e-term','new_signups')">new_signups</span><span class="chip" onclick="f('e-term','business_users')">business_users</span><span class="chip" onclick="f('e-term','variant_a')">variant_a</span></div></div></div>
+          <div></div>
+        </div>
+        <div class="field-divider"></div>
+        <div class="actions-row"><button class="btn-primary" onclick="gen('e')"><span class="spinner"></span>Generate Link</button><button class="btn-secondary" onclick="clr('e')">Clear</button></div>
+      </div>
+      <div class="output" id="e-out"><div class="output-header"><div class="output-header-left"><span class="output-dot"></span><span class="output-label">Generated URL</span></div><button class="btn-copy" id="e-cb" onclick="cp('e')"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div><div class="output-url" id="e-disp"></div><div class="output-tags" id="e-tags"></div></div>
+    </div>
+    <div class="hist-card" id="e-hist-card">
+      <div class="hist-header"><div class="hist-title"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="12 8 12 12 14 14"/><path d="M3.05 11a9 9 0 1 0 .5-3M3 4v4h4"/></svg>Link History<span class="hist-count" id="e-hist-count">0</span></div><div class="hist-btns"><button class="btn-export" onclick="exportHistory('e')"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV</button><button class="btn-clear" onclick="clearHistory('e')"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>Clear all</button></div></div>
+      <div class="hist-filters"><input class="hist-filter hist-filter-author" placeholder="Filter by author…" oninput="drawHistory('e')" id="e-f-author"/><input class="hist-filter hist-filter-sm" placeholder="Source…" oninput="drawHistory('e')" id="e-f-source"/><input class="hist-filter hist-filter-sm" placeholder="Medium…" oninput="drawHistory('e')" id="e-f-medium"/><input class="hist-filter hist-filter-sm" placeholder="Campaign…" oninput="drawHistory('e')" id="e-f-campaign"/><input class="hist-filter hist-filter-sm" placeholder="Content…" oninput="drawHistory('e')" id="e-f-content"/></div>
+      <div id="e-hist-body"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       OUTREACH (SALES)
+  ═══════════════════════════════════════════ -->
+  <div id="tab-sales" class="tab-panel active">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-top"><span class="card-title">Outreach Links</span><div class="card-title-right"><span class="card-channel-tag ch-outreach">outreach</span><span class="status-dot" id="s-status"></span></div></div>
+        <div class="card-desc">For Monzo Business links sent in BD outreach, partnership emails, and 1-to-1 prospect communications.</div>
+      </div>
+      <div class="callout callout-outreach">
+        <div class="callout-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <div><strong>When to use this:</strong> You're sending a prospect or partner a link to Monzo Business. Use the tool or team as <code>utm_source</code> and the company name in <code>utm_term</code> to filter in GA4 later.</div>
+      </div>
+      <div class="prog-section"><div class="prog-meta"><span class="prog-label">Required fields</span><span class="prog-pct" id="s-prog-pct">0%</span></div><div class="prog-track"><div class="prog-fill" id="s-prog-bar"></div></div></div>
+      <div class="alert-wrap" id="s-alert"><div class="alert-box"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div><div class="alert-title" id="s-alert-title">Unable to generate link</div><div class="alert-desc" id="s-alert-desc"></div></div></div></div>
+      <div class="form-body">
+        <div class="fi">
+          <label class="field-label">Destination URL <span class="tip-wrap"><i class="tip-icon">i</i><span class="tip-box">The page visitors land on — must start with https://</span></span><span class="badge-req">REQUIRED</span></label>
+          <input type="url" id="s-url" placeholder="https://monzo.com/business"/>
+          <div class="chips"><span class="chip" onclick="f('s-url','https://monzo.com/business')">monzo business</span><span class="chip" onclick="f('s-url','https://monzo.com/business/pricing')">business pricing</span><span class="chip" onclick="f('s-url','https://monzo.com/business/features')">business features</span><span class="chip" onclick="f('s-url','https://monzo.com/contact')">contact</span></div>
+        </div>
+        <div class="field-divider"></div>
+        <div class="field-section-title">UTM Parameters</div>
+        <div class="param-grid">
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>utm_source</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="text" id="s-source" placeholder="bd_team"/><div class="chips"><span class="chip" onclick="f('s-source','bd_team')">bd_team</span><span class="chip" onclick="f('s-source','apollo')">apollo</span><span class="chip" onclick="f('s-source','linkedin_outreach')">linkedin_outreach</span><span class="chip" onclick="f('s-source','hubspot')">hubspot</span></div></div></div>
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>utm_medium</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="hidden" id="s-medium" value="outreach"/><div class="medium-badge mb-outreach"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>outreach</div><div class="lock-note">Locked — separates BD outreach from marketing email.</div></div></div>
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>utm_campaign</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="text" id="s-campaign" placeholder="smb_outbound"/><div class="chips"><span class="chip" onclick="f('s-campaign','smb_outbound')">smb_outbound</span><span class="chip" onclick="f('s-campaign','enterprise_banking')">enterprise_banking</span><span class="chip" onclick="f('s-campaign','partnership_2026')">partnership_2026</span><span class="chip" onclick="f('s-campaign','follow_up')">follow_up</span></div></div></div>
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>utm_content</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="text" id="s-content" placeholder="business_pricing"/><div class="chips"><span class="chip" onclick="f('s-content','business_pricing')">business_pricing</span><span class="chip" onclick="f('s-content','case_study')">case_study</span><span class="chip" onclick="f('s-content','features_overview')">features_overview</span><span class="chip" onclick="f('s-content','demo_request')">demo_request</span></div></div></div>
+        </div>
+        <div class="param-grid" style="margin-top:12px">
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>utm_term</span><span class="badge-opt">OPTIONAL</span></div><div class="param-panel-body"><input type="text" id="s-term" placeholder="prospect_company_name"/><div class="lock-note">Filter GA4 by prospect company or deal stage.</div></div></div>
+          <div></div>
+        </div>
+        <div class="field-divider"></div>
+        <div class="actions-row"><button class="btn-primary" onclick="gen('s')"><span class="spinner"></span>Generate Link</button><button class="btn-secondary" onclick="clr('s')">Clear</button></div>
+      </div>
+      <div class="output" id="s-out"><div class="output-header"><div class="output-header-left"><span class="output-dot"></span><span class="output-label">Generated URL</span></div><button class="btn-copy" id="s-cb" onclick="cp('s')"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div><div class="output-url" id="s-disp"></div><div class="output-tags" id="s-tags"></div></div>
+    </div>
+    <div class="hist-card" id="s-hist-card">
+      <div class="hist-header"><div class="hist-title"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="12 8 12 12 14 14"/><path d="M3.05 11a9 9 0 1 0 .5-3M3 4v4h4"/></svg>Link History<span class="hist-count" id="s-hist-count">0</span></div><div class="hist-btns"><button class="btn-export" onclick="exportHistory('s')"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV</button><button class="btn-clear" onclick="clearHistory('s')"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>Clear all</button></div></div>
+      <div class="hist-filters"><input class="hist-filter hist-filter-author" placeholder="Filter by author…" oninput="drawHistory('s')" id="s-f-author"/><input class="hist-filter hist-filter-sm" placeholder="Source…" oninput="drawHistory('s')" id="s-f-source"/><input class="hist-filter hist-filter-sm" placeholder="Medium…" oninput="drawHistory('s')" id="s-f-medium"/><input class="hist-filter hist-filter-sm" placeholder="Campaign…" oninput="drawHistory('s')" id="s-f-campaign"/><input class="hist-filter hist-filter-sm" placeholder="Content…" oninput="drawHistory('s')" id="s-f-content"/></div>
+      <div id="s-hist-body"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       EVENTS
+  ═══════════════════════════════════════════ -->
+  <div id="tab-events" class="tab-panel">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-top"><span class="card-title">Event &amp; Conference Links</span><div class="card-title-right"><span class="card-channel-tag ch-events">event</span><span class="status-dot" id="ev-status"></span></div></div>
+        <div class="card-desc">For QR codes, booth materials, sponsor placements, and speaker slides at fintech conferences and Monzo events.</div>
+      </div>
+      <div class="callout callout-events">
+        <div class="callout-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <div><strong>When to use this:</strong> You're at a conference with a QR code, banner, or speaker slide. Use the event name as <code>utm_source</code> and specify the physical format in <code>utm_content</code> — e.g. <code>qr_code</code> or <code>brochure</code>.</div>
+      </div>
+      <div class="prog-section"><div class="prog-meta"><span class="prog-label">Required fields</span><span class="prog-pct" id="ev-prog-pct">0%</span></div><div class="prog-track"><div class="prog-fill" id="ev-prog-bar"></div></div></div>
+      <div class="alert-wrap" id="ev-alert"><div class="alert-box"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div><div class="alert-title" id="ev-alert-title">Unable to generate link</div><div class="alert-desc" id="ev-alert-desc"></div></div></div></div>
+      <div class="form-body">
+        <div class="fi">
+          <label class="field-label">Destination URL <span class="tip-wrap"><i class="tip-icon">i</i><span class="tip-box">The page visitors land on — must start with https://</span></span><span class="badge-req">REQUIRED</span></label>
+          <input type="url" id="ev-url" placeholder="https://monzo.com/"/>
+          <div class="chips"><span class="chip" onclick="f('ev-url','https://monzo.com/')">monzo.com</span><span class="chip" onclick="f('ev-url','https://monzo.com/business')">business</span><span class="chip" onclick="f('ev-url','https://monzo.com/features')">features</span><span class="chip" onclick="f('ev-url','https://monzo.com/download')">download</span></div>
+        </div>
+        <div class="field-divider"></div>
+        <div class="field-section-title">UTM Parameters</div>
+        <div class="param-grid">
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>utm_source</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="text" id="ev-source" placeholder="fintech_connect_2026"/><div class="chips"><span class="chip" onclick="f('ev-source','fintech_connect_2026')">fintech_connect</span><span class="chip" onclick="f('ev-source','money2020_europe')">money2020</span><span class="chip" onclick="f('ev-source','web_summit_2026')">web_summit</span><span class="chip" onclick="f('ev-source','monzo_open_office')">monzo_open_office</span></div></div></div>
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>utm_medium</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="hidden" id="ev-medium" value="event"/><div class="medium-badge mb-events"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>event</div><div class="lock-note">Locked — use utm_content for format detail.</div></div></div>
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>utm_campaign</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="text" id="ev-campaign" placeholder="fintech_connect_booth"/><div class="chips"><span class="chip" onclick="f('ev-campaign','booth_traffic')">booth_traffic</span><span class="chip" onclick="f('ev-campaign','speaker_session')">speaker_session</span><span class="chip" onclick="f('ev-campaign','event_sponsorship')">event_sponsorship</span></div></div></div>
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>utm_content</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="text" id="ev-content" placeholder="qr_code"/><div class="chips"><span class="chip" onclick="f('ev-content','qr_code')">qr_code</span><span class="chip" onclick="f('ev-content','speaker_slide')">speaker_slide</span><span class="chip" onclick="f('ev-content','brochure')">brochure</span><span class="chip" onclick="f('ev-content','banner_stand')">banner_stand</span><span class="chip" onclick="f('ev-content','badge_link')">badge_link</span></div></div></div>
+        </div>
+        <div class="field-divider"></div>
+        <div class="actions-row"><button class="btn-primary" onclick="gen('ev')"><span class="spinner"></span>Generate Link</button><button class="btn-secondary" onclick="clr('ev')">Clear</button></div>
+      </div>
+      <div class="output" id="ev-out"><div class="output-header"><div class="output-header-left"><span class="output-dot"></span><span class="output-label">Generated URL</span></div><button class="btn-copy" id="ev-cb" onclick="cp('ev')"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div><div class="output-url" id="ev-disp"></div><div class="output-tags" id="ev-tags"></div></div>
+    </div>
+    <div class="hist-card" id="ev-hist-card">
+      <div class="hist-header"><div class="hist-title"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="12 8 12 12 14 14"/><path d="M3.05 11a9 9 0 1 0 .5-3M3 4v4h4"/></svg>Link History<span class="hist-count" id="ev-hist-count">0</span></div><div class="hist-btns"><button class="btn-export" onclick="exportHistory('ev')"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV</button><button class="btn-clear" onclick="clearHistory('ev')"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>Clear all</button></div></div>
+      <div class="hist-filters"><input class="hist-filter hist-filter-author" placeholder="Filter by author…" oninput="drawHistory('ev')" id="ev-f-author"/><input class="hist-filter hist-filter-sm" placeholder="Source…" oninput="drawHistory('ev')" id="ev-f-source"/><input class="hist-filter hist-filter-sm" placeholder="Medium…" oninput="drawHistory('ev')" id="ev-f-medium"/><input class="hist-filter hist-filter-sm" placeholder="Campaign…" oninput="drawHistory('ev')" id="ev-f-campaign"/><input class="hist-filter hist-filter-sm" placeholder="Content…" oninput="drawHistory('ev')" id="ev-f-content"/></div>
+      <div id="ev-hist-body"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PAID
+  ═══════════════════════════════════════════ -->
+  <div id="tab-paid" class="tab-panel">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-top"><span class="card-title">Paid</span><div class="card-title-right"><span class="card-channel-tag ch-paid">cpc</span><span class="status-dot" id="pd-status"></span></div></div>
+        <div class="card-desc">Track paid search and display ad campaigns. Use <code>utm_term</code> for the keyword and <code>utm_content</code> to differentiate ad variants or placements.</div>
+      </div>
+      <div class="callout callout-paid">
+        <div class="callout-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><path d="M12 16h.01"/></svg></div>
+        <div><strong>When to use this:</strong> You're running a paid search or display campaign (Google Ads, Meta Ads, etc.) and want to track clicks in GA4 separately from organic traffic. Set <code>utm_medium</code> to <code>cpc</code> so GA4 maps it to the Paid Search channel automatically.</div>
+      </div>
+      <div class="prog-section"><div class="prog-meta"><span class="prog-label">Required fields</span><span class="prog-pct" id="pd-prog-pct">0%</span></div><div class="prog-track"><div class="prog-fill" id="pd-prog-bar"></div></div></div>
+      <div class="alert-wrap" id="pd-alert"><div class="alert-box"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div><div class="alert-title" id="pd-alert-title">Unable to generate link</div><div class="alert-desc" id="pd-alert-desc"></div></div></div></div>
+      <div class="form-body">
+        <div class="fi">
+          <label class="field-label">Destination URL <span class="tip-wrap"><i class="tip-icon">i</i><span class="tip-box">The landing page — must start with https://</span></span><span class="badge-req">REQUIRED</span></label>
+          <input type="url" id="pd-url" placeholder="https://monzo.com/"/>
+          <div class="chips"><span class="chip" onclick="f('pd-url','https://monzo.com/')">monzo.com</span><span class="chip" onclick="f('pd-url','https://monzo.com/business')">business</span><span class="chip" onclick="f('pd-url','https://monzo.com/features')">features</span><span class="chip" onclick="f('pd-url','https://monzo.com/download')">download</span></div>
+        </div>
+        <div class="field-divider"></div>
+        <div class="field-section-title">UTM Parameters</div>
+        <div class="param-grid">
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>utm_source</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="text" id="pd-source" placeholder="google"/><div class="chips"><span class="chip" onclick="f('pd-source','google')">google</span><span class="chip" onclick="f('pd-source','bing')">bing</span><span class="chip" onclick="f('pd-source','meta')">meta</span><span class="chip" onclick="f('pd-source','youtube')">youtube</span><span class="chip" onclick="f('pd-source','display_network')">display_network</span></div></div></div>
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>utm_medium</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="hidden" id="pd-medium" value="cpc"/><div class="medium-badge mb-paid"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>cpc</div><div class="lock-note">Locked — maps to Paid Search in GA4 channel grouping.</div></div></div>
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>utm_campaign</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="text" id="pd-campaign" placeholder="brand_search_2026"/><div class="chips"><span class="chip" onclick="f('pd-campaign','brand_search_2026')">brand_search_2026</span><span class="chip" onclick="f('pd-campaign','flex_retargeting')">flex_retargeting</span><span class="chip" onclick="f('pd-campaign','business_acquisition')">business_acquisition</span><span class="chip" onclick="f('pd-campaign','competitor_conquest')">competitor_conquest</span></div></div></div>
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>utm_content</span><span class="badge-req">REQUIRED</span></div><div class="param-panel-body"><input type="text" id="pd-content" placeholder="headline_a"/><div class="chips"><span class="chip" onclick="f('pd-content','headline_a')">headline_a</span><span class="chip" onclick="f('pd-content','headline_b')">headline_b</span><span class="chip" onclick="f('pd-content','banner_300x250')">banner_300x250</span><span class="chip" onclick="f('pd-content','responsive_ad')">responsive_ad</span></div></div></div>
+        </div>
+        <div class="param-grid" style="margin-top:12px">
+          <div class="param-panel"><div class="param-panel-head"><span class="param-panel-name"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>utm_term</span><span class="badge-opt">OPTIONAL</span></div><div class="param-panel-body"><input type="text" id="pd-term" placeholder="monzo business account"/><div class="chips"><span class="chip" onclick="f('pd-term','monzo+business+account')">monzo business account</span><span class="chip" onclick="f('pd-term','best+uk+bank')">best uk bank</span><span class="chip" onclick="f('pd-term','free+business+banking')">free business banking</span><span class="chip" onclick="f('pd-term','online+bank+uk')">online bank uk</span></div></div></div>
+          <div></div>
+        </div>
+        <div class="field-divider"></div>
+        <div class="actions-row"><button class="btn-primary" onclick="gen('pd')"><span class="spinner"></span>Generate Link</button><button class="btn-secondary" onclick="clr('pd')">Clear</button></div>
+      </div>
+      <div class="output" id="pd-out"><div class="output-header"><div class="output-header-left"><span class="output-dot"></span><span class="output-label">Generated URL</span></div><button class="btn-copy" id="pd-cb" onclick="cp('pd')"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div><div class="output-url" id="pd-disp"></div><div class="output-tags" id="pd-tags"></div></div>
+    </div>
+    <div class="hist-card" id="pd-hist-card">
+      <div class="hist-header"><div class="hist-title"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="12 8 12 12 14 14"/><path d="M3.05 11a9 9 0 1 0 .5-3M3 4v4h4"/></svg>Link History<span class="hist-count" id="pd-hist-count">0</span></div><div class="hist-btns"><button class="btn-export" onclick="exportHistory('pd')"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV</button><button class="btn-clear" onclick="clearHistory('pd')"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>Clear all</button></div></div>
+      <div class="hist-filters"><input class="hist-filter hist-filter-author" placeholder="Filter by author…" oninput="drawHistory('pd')" id="pd-f-author"/><input class="hist-filter hist-filter-sm" placeholder="Source…" oninput="drawHistory('pd')" id="pd-f-source"/><input class="hist-filter hist-filter-sm" placeholder="Medium…" oninput="drawHistory('pd')" id="pd-f-medium"/><input class="hist-filter hist-filter-sm" placeholder="Campaign…" oninput="drawHistory('pd')" id="pd-f-campaign"/><input class="hist-filter hist-filter-sm" placeholder="Content…" oninput="drawHistory('pd')" id="pd-f-content"/></div>
+      <div id="pd-hist-body"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       REFERENCE
+  ═══════════════════════════════════════════ -->
+  <div id="tab-reference" class="tab-panel">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-top"><span class="card-title">UTM Parameter Reference</span></div>
+        <div class="card-desc">Quick reference for all UTM parameters used in Monzo's GA4 tracking setup.</div>
+      </div>
+
+      <!-- UTM Explainer -->
+      <div style="padding:26px;border-bottom:1px solid var(--border)">
+        <div style="font-size:15px;font-weight:800;letter-spacing:-.03em;color:var(--text);margin-bottom:14px">What are UTM tags and why do we use them?</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div style="background:var(--surface-raised);border:1px solid var(--border);border-radius:10px;padding:18px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <div style="width:28px;height:28px;border-radius:8px;background:rgba(245,158,11,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="14" height="14" fill="none" stroke="#F59E0B" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              </div>
+              <span style="font-size:13px;font-weight:700;color:var(--text)">What is a UTM tag?</span>
+            </div>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.65;margin:0">UTM (Urchin Tracking Module) parameters are short snippets of text added to the end of a URL. When someone clicks a tagged link, Google Analytics 4 reads those parameters and records exactly where that visitor came from, what channel they used, and which campaign or piece of content drove them there.</p>
+          </div>
+          <div style="background:var(--surface-raised);border:1px solid var(--border);border-radius:10px;padding:18px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <div style="width:28px;height:28px;border-radius:8px;background:rgba(245,158,11,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="14" height="14" fill="none" stroke="#F59E0B" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <span style="font-size:13px;font-weight:700;color:var(--text)">Why is it important for Monzo?</span>
+            </div>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.65;margin:0">Without UTM tags, GA4 labels most traffic as "direct" or "unassigned" — making it impossible to tell whether a sign-up came from a partner article, a BD email, or a social post. UTM tags give every link a clear identity, so the team can see exactly which channels and campaigns are driving growth.</p>
+          </div>
+          <div style="background:var(--surface-raised);border:1px solid var(--border);border-radius:10px;padding:18px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <div style="width:28px;height:28px;border-radius:8px;background:rgba(245,158,11,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="14" height="14" fill="none" stroke="#F59E0B" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+              </div>
+              <span style="font-size:13px;font-weight:700;color:var(--text)">Filtering campaign reports in GA4</span>
+            </div>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.65;margin:0">In GA4, head to <strong style="color:var(--text)">Acquisition → Traffic Acquisition</strong> and filter by <code style="font-family:var(--mono);font-size:11.5px;padding:1px 5px;border-radius:4px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.22);color:#B45309">utm_campaign</code> or <code style="font-family:var(--mono);font-size:11.5px;padding:1px 5px;border-radius:4px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.22);color:#B45309">utm_medium</code> to see sessions, conversions, and revenue attributed to a specific campaign. Consistent naming across all links is what makes this filtering reliable post-campaign.</p>
+          </div>
+          <div style="background:var(--surface-raised);border:1px solid var(--border);border-radius:10px;padding:18px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <div style="width:28px;height:28px;border-radius:8px;background:rgba(245,158,11,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="14" height="14" fill="none" stroke="#F59E0B" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+              </div>
+              <span style="font-size:13px;font-weight:700;color:var(--text)">Always-on best practice</span>
+            </div>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.65;margin:0">Tag every outbound link that lands on a Monzo property — whether it's a partner article, a BD email, a social post, or a QR code at an event. Untagged links quietly pollute your analytics. Consistent UTM hygiene means the data you see in GA4 after a campaign is trustworthy and actionable.</p>
+          </div>
+        </div>
+      </div>
+
+      <table class="ref-table">
+        <thead><tr><th style="width:160px">Parameter</th><th>Purpose &amp; Usage</th></tr></thead>
+        <tbody>
+          <tr><td class="ref-param">utm_source</td><td><div class="ref-desc">Identifies where the traffic came from — the referring website, platform, or tool. For referral links use the partner domain; for social use the platform name.</div><div class="ref-examples"><span class="ref-chip">moneysavingexpert.com</span><span class="ref-chip">instagram</span><span class="ref-chip">customer.io</span><span class="ref-chip">fintech_connect_2026</span></div></td></tr>
+          <tr><td class="ref-param">utm_medium</td><td><div class="ref-desc">The channel type. GA4 uses this for its default channel grouping, so values should follow the channel taxonomy: referral, email, outreach, event, social, cpc.</div><div class="ref-examples"><span class="ref-chip">referral</span><span class="ref-chip">email</span><span class="ref-chip">outreach</span><span class="ref-chip">event</span><span class="ref-chip">social</span><span class="ref-chip">cpc</span></div></td></tr>
+          <tr><td class="ref-param">utm_campaign</td><td><div class="ref-desc">Groups all links belonging to one marketing initiative. Use underscores, keep it lowercase. This is the primary dimension for campaign-level analysis in GA4.</div><div class="ref-examples"><span class="ref-chip">refer_a_friend</span><span class="ref-chip">flex_launch</span><span class="ref-chip">monthly_digest</span><span class="ref-chip">event_sponsorship</span></div></td></tr>
+          <tr><td class="ref-param">utm_content</td><td><div class="ref-desc">Distinguishes multiple links within the same campaign — e.g. different CTAs in the same email, or different placements on the same page. Always add this when there are multiple links.</div><div class="ref-examples"><span class="ref-chip">hero_cta</span><span class="ref-chip">comparison_table</span><span class="ref-chip">qr_code</span><span class="ref-chip">reel</span></div></td></tr>
+          <tr><td class="ref-param">utm_term</td><td><div class="ref-desc">Optional. Used to pass an audience segment, A/B variant, or prospect identifier. Useful for filtering GA4 reports by audience type or deal stage in outreach campaigns.</div><div class="ref-examples"><span class="ref-chip">existing_customers</span><span class="ref-chip">small_business</span><span class="ref-chip">variant_a</span><span class="ref-chip">acme_corp</span></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  </div><!-- /tab-content -->
+  </div><!-- /page-inner -->
+</main>
+
+<script>
+const REQUIRED = {
+  p:  ['p-url','p-source','p-campaign','p-content'],
+  e:  ['e-url','e-source','e-medium','e-campaign','e-content'],
+  s:  ['s-url','s-source','s-medium','s-campaign','s-content'],
+  ev: ['ev-url','ev-source','ev-medium','ev-campaign','ev-content'],
+  pd: ['pd-url','pd-source','pd-medium','pd-campaign','pd-content'],
+};
+
+function isValidUrl(v){try{new URL(v);return true}catch{return false}}
+
+function urlState(pfx){
+  var v=(document.getElementById(pfx+'-url')||{}).value||'';
+  if(!v)return'empty';
+  if(!isValidUrl(v))return'invalid';
+  return'valid';
+}
+
+function lockDownstream(pfx,lock){
+  var skip=[pfx+'-url'];
+  (REQUIRED[pfx]||[]).forEach(function(id){
+    if(skip.includes(id))return;
+    var el=document.getElementById(id);
+    if(el){var fi=el.closest('.fi,.param-panel-body');if(fi)fi.classList.toggle('field-locked',lock)}
+  });
+}
+
+function updateProgress(pfx){
+  var reqs=REQUIRED[pfx];
+  var urlOk=urlState(pfx)==='valid';
+  lockDownstream(pfx,!urlOk);
+  var filled=0;
+  reqs.forEach(function(id){
+    var el=document.getElementById(id);if(!el)return;
+    if(id===pfx+'-url'){if(urlOk)filled++;}
+    else{if(urlOk&&el.value.trim())filled++;}
+  });
+  var pct=Math.round(filled/reqs.length*100);
+  var bar=document.getElementById(pfx+'-prog-bar');
+  var pctEl=document.getElementById(pfx+'-prog-pct');
+  if(bar){bar.style.width=pct+'%';bar.style.background=pct===100?'var(--green)':'var(--green)'}
+  if(pctEl){pctEl.textContent=pct+'%';pctEl.style.color=pct===100?'var(--green-dark)':'';}
+}
+
+function f(id,v){
+  var el=document.getElementById(id);
+  if(el){el.value=v;el.dispatchEvent(new Event(el.tagName==='SELECT'?'change':'input'))}
+}
+
+function sw(name,el){
+  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.tab-btn').forEach(function(t){t.classList.remove('active')});
+  var panel=document.getElementById('tab-'+name);
+  if(panel)panel.classList.add('active');
+  if(el&&el.classList)el.classList.add('active');
+}
+
+function showErr(pfx,title,desc,fields){
+  var wrap=document.getElementById(pfx+'-alert');
+  if(wrap)wrap.style.display='block';
+  var t=document.getElementById(pfx+'-alert-title');
+  var d=document.getElementById(pfx+'-alert-desc');
+  if(t)t.textContent=title;if(d)d.textContent=desc||'';
+  (fields||[]).forEach(function(id){var el=document.getElementById(id);if(el)el.classList.add('err')});
+}
+
+function clearErr(pfx){
+  var wrap=document.getElementById(pfx+'-alert');
+  if(wrap)wrap.style.display='none';
+  document.querySelectorAll('.err').forEach(function(el){el.classList.remove('err')});
+}
+
+function gen(pfx){
+  clearErr(pfx);
+  var url=(document.getElementById(pfx+'-url')||{}).value||'';
+  if(!url){showErr(pfx,'Destination URL missing','Enter the page you want to link to.',[pfx+'-url']);return}
+  if(!isValidUrl(url)){showErr(pfx,'Invalid destination URL','Must start with https:// or http://',[pfx+'-url']);return}
+  var src=(document.getElementById(pfx+'-source')||{}).value||'';
+  if(!src){showErr(pfx,'utm_source missing','Enter the source — e.g. moneysavingexpert.com or instagram.',[pfx+'-source']);return}
+  var camp=(document.getElementById(pfx+'-campaign')||{}).value||'';
+  if(!camp){showErr(pfx,'utm_campaign missing','Enter a campaign name.',[pfx+'-campaign']);return}
+  var cont=(document.getElementById(pfx+'-content')||{}).value||'';
+  if(!cont){showErr(pfx,'utm_content missing','Enter the content identifier.',[pfx+'-content']);return}
+  var tabMap={p:'referral',e:'email',s:'sales',ev:'events',pd:'paid'};
+  var btn=document.querySelector('#tab-'+(tabMap[pfx]||pfx)+' .btn-primary');
+  if(btn){
+    btn.classList.add('loading');
+    var txt=btn.childNodes[btn.childNodes.length-1];
+    var orig=txt.textContent;txt.textContent=' Generating…';
+    setTimeout(function(){btn.classList.remove('loading');txt.textContent=orig;buildOutput(pfx,url);},550);
+  } else buildOutput(pfx,url);
+}
+
+function buildOutput(pfx,url){
+  var g=function(id){return(document.getElementById(pfx+'-'+id)||{}).value||''};
+  var params={};
+  ['source','medium','campaign','content','term'].forEach(function(k){var v=g(k);if(v)params['utm_'+k]=v});
+  var base=url.replace(/\/$/,'');
+  var qs=Object.entries(params).map(function(e){return e[0]+'='+encodeURIComponent(e[1])}).join('&');
+  var full=base+(qs?'?'+qs:'');
+  var disp=document.getElementById(pfx+'-disp');
+  if(disp){
+    var u=new URL(full);
+    var html='<span class="u-base">'+u.origin+u.pathname+'</span>';
+    var first=true;
+    u.searchParams.forEach(function(v,k){
+      html+='<span class="u-sep">'+(first?'?':'&amp;')+'</span>';
+      html+='<span class="u-key">'+k+'=</span><span class="u-val">'+v+'</span>';
+      first=false;
+    });
+    disp.innerHTML=html;
+  }
+  var tags=document.getElementById(pfx+'-tags');
+  if(tags){tags.innerHTML=Object.entries(params).map(function(e){return'<span class="output-tag"><span>'+e[0]+'</span><span>'+e[1]+'</span></span>'}).join('')}
+  var out=document.getElementById(pfx+'-out');
+  if(out){out.style.display='block';out.dataset.url=full}
+  var dot=document.getElementById(pfx+'-status');
+  if(dot)dot.classList.add('on');
+  var author=(document.getElementById('global-author')||{}).value||'';
+  var now=new Date();
+  var ds=now.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][now.getMonth()]+' '+now.getFullYear();
+  var record={
+    id:'u'+Date.now().toString(36),tab:pfx,
+    author:author.trim()||'Anonymous',
+    source:params.utm_source||'',medium:params.utm_medium||'',
+    campaign:params.utm_campaign||'',content:params.utm_content||'',
+    term:params.utm_term||'',dest:url,full:full,ts:ds
+  };
+  addToHistory(pfx,record);
+}
+
+function cp(pfx){
+  var out=document.getElementById(pfx+'-out');
+  var url=out&&out.dataset.url;
+  if(url){
+    navigator.clipboard.writeText(url).catch(function(){});
+    var btn=document.getElementById(pfx+'-cb');
+    if(btn){var orig=btn.innerHTML;btn.innerHTML='✓ Copied!';setTimeout(function(){btn.innerHTML=orig},1600)}
+  }
+}
+
+function clr(pfx){
+  ['url','source','campaign','content','term'].forEach(function(k){var el=document.getElementById(pfx+'-'+k);if(el)el.value=''});
+  clearErr(pfx);
+  var out=document.getElementById(pfx+'-out');if(out)out.style.display='none';
+  var dot=document.getElementById(pfx+'-status');if(dot)dot.classList.remove('on');
+  updateProgress(pfx);
+}
+
+Object.keys(REQUIRED).forEach(function(pfx){
+  (REQUIRED[pfx]||[]).forEach(function(id){
+    var el=document.getElementById(id);if(!el)return;
+    el.addEventListener(el.tagName==='SELECT'?'change':'input',function(){clearErr(pfx);updateProgress(pfx)});
+  });
+  updateProgress(pfx);
+});
+
+// ─── History ───────────────────────────────────────────────
+var UTM_HIST=null;
+
+var SEED_ROWS=[
+  {id:'s01',tab:'p',author:'Tom',source:'moneysavingexpert.com',medium:'referral',campaign:'refer_a_friend',content:'hero_banner',full:'https://monzo.com/refer-a-friend?utm_source=moneysavingexpert.com&utm_medium=referral&utm_campaign=refer_a_friend&utm_content=hero_banner',ts:'10 Feb 2026'},
+  {id:'s02',tab:'p',author:'Tom',source:'comparethemarket.com',medium:'referral',campaign:'refer_a_friend',content:'comparison_table',full:'https://monzo.com/?utm_source=comparethemarket.com&utm_medium=referral&utm_campaign=refer_a_friend&utm_content=comparison_table',ts:'10 Feb 2026'},
+  {id:'s03',tab:'p',author:'Jess',source:'money.co.uk',medium:'referral',campaign:'partner_2026',content:'review_article',full:'https://monzo.com/?utm_source=money.co.uk&utm_medium=referral&utm_campaign=partner_2026&utm_content=review_article',ts:'12 Feb 2026'},
+  {id:'s04',tab:'p',author:'Jess',source:'which.co.uk',medium:'referral',campaign:'partner_2026',content:'sidebar_link',full:'https://monzo.com/features?utm_source=which.co.uk&utm_medium=referral&utm_campaign=partner_2026&utm_content=sidebar_link',ts:'14 Feb 2026'},
+  {id:'s05',tab:'e',author:'Priya',source:'customer.io',medium:'email',campaign:'monthly_digest',content:'hero_cta',full:'https://monzo.com/features?utm_source=customer.io&utm_medium=email&utm_campaign=monthly_digest&utm_content=hero_cta',ts:'01 Mar 2026'},
+  {id:'s06',tab:'e',author:'Priya',source:'customer.io',medium:'email',campaign:'monthly_digest',content:'footer_link',full:'https://monzo.com/blog?utm_source=customer.io&utm_medium=email&utm_campaign=monthly_digest&utm_content=footer_link',ts:'01 Mar 2026'},
+  {id:'s07',tab:'e',author:'Priya',source:'braze',medium:'email',campaign:'flex_launch',content:'feature_card',full:'https://monzo.com/features/flex?utm_source=braze&utm_medium=email&utm_campaign=flex_launch&utm_content=feature_card',ts:'05 Mar 2026'},
+  {id:'s08',tab:'soc',author:'Marcus',source:'instagram',medium:'social',campaign:'flex_launch',content:'reel',full:'https://monzo.com/features/flex?utm_source=instagram&utm_medium=social&utm_campaign=flex_launch&utm_content=reel',ts:'06 Mar 2026'},
+  {id:'s09',tab:'soc',author:'Marcus',source:'tiktok',medium:'social',campaign:'flex_launch',content:'video',full:'https://monzo.com/download?utm_source=tiktok&utm_medium=social&utm_campaign=flex_launch&utm_content=video',ts:'06 Mar 2026'},
+  {id:'s10',tab:'soc',author:'Marcus',source:'linkedin',medium:'social',campaign:'brand_awareness',content:'carousel',full:'https://monzo.com/business?utm_source=linkedin&utm_medium=social&utm_campaign=brand_awareness&utm_content=carousel',ts:'10 Mar 2026'},
+  {id:'s11',tab:'ev',author:'Sam',source:'fintech_connect_2026',medium:'event',campaign:'booth_traffic',content:'qr_code',full:'https://monzo.com/?utm_source=fintech_connect_2026&utm_medium=event&utm_campaign=booth_traffic&utm_content=qr_code',ts:'18 Mar 2026'},
+  {id:'s12',tab:'ev',author:'Sam',source:'fintech_connect_2026',medium:'event',campaign:'speaker_session',content:'speaker_slide',full:'https://monzo.com/business?utm_source=fintech_connect_2026&utm_medium=event&utm_campaign=speaker_session&utm_content=speaker_slide',ts:'19 Mar 2026'},
+];
+
+function getHistory(){
+  if(UTM_HIST!==null)return UTM_HIST;
+  try{var raw=localStorage.getItem('monzo_utm_v1');UTM_HIST=raw?JSON.parse(raw):[];}catch(e){UTM_HIST=[];}
+  var hasSeed=false;
+  for(var i=0;i<UTM_HIST.length;i++){if(UTM_HIST[i].id&&UTM_HIST[i].id.charAt(0)==='s'){hasSeed=true;break;}}
+  if(!hasSeed){UTM_HIST=SEED_ROWS.concat(UTM_HIST);try{localStorage.setItem('monzo_utm_v1',JSON.stringify(UTM_HIST));}catch(e){}}
+  return UTM_HIST;
+}
+
+function putHistory(arr){
+  UTM_HIST=arr;
+  try{localStorage.setItem('monzo_utm_v1',JSON.stringify(arr));}catch(e){}
+}
+
+function addToHistory(pfx,rec){
+  var arr=getHistory();arr.push(rec);
+  if(arr.length>500)arr=arr.slice(arr.length-500);
+  putHistory(arr);drawHistory(pfx);
+}
+
+function drawHistory(pfx){
+  var body=document.getElementById(pfx+'-hist-body');if(!body)return;
+  var all=getHistory();
+  var tab=all.filter(function(r){return r.tab===pfx});
+  var badge=document.getElementById(pfx+'-hist-count');if(badge)badge.textContent=tab.length;
+  function fval(id){var el=document.getElementById(id);return el?el.value.trim().toLowerCase():''}
+  var fA=fval(pfx+'-f-author'),fS=fval(pfx+'-f-source'),fM=fval(pfx+'-f-medium');
+  var fC=fval(pfx+'-f-campaign'),fCo=fval(pfx+'-f-content');
+  var filtered=tab.filter(function(r){
+    var a=(r.author||'').toLowerCase(),s=(r.source||'').toLowerCase();
+    var m=(r.medium||'').toLowerCase(),cam=(r.campaign||'').toLowerCase(),con=(r.content||'').toLowerCase();
+    if(fA&&a.indexOf(fA)<0)return false;if(fS&&s.indexOf(fS)<0)return false;
+    if(fM&&m.indexOf(fM)<0)return false;if(fC&&cam.indexOf(fC)<0)return false;
+    if(fCo&&con.indexOf(fCo)<0)return false;return true;
+  });
+  if(filtered.length===0){
+    var msg=tab.length===0?'No links generated yet — create your first link above.':'No records match your filters.';
+    body.innerHTML='<div class="hist-empty">'+msg+'</div>';return;
+  }
+  var rows='';
+  for(var k=0;k<filtered.length;k++){
+    var r=filtered[k];
+    var shortUrl=r.full&&r.full.length>58?r.full.slice(0,58)+'…':(r.full||'');
+    rows+='<tr>'
+      +'<td class="hist-num">'+(k+1)+'</td>'
+      +'<td class="hist-author">'+xe(r.author||'—')+'</td>'
+      +'<td><span class="hist-tag">'+xe(r.source||'—')+'</span></td>'
+      +'<td><span class="hist-tag">'+xe(r.medium||'—')+'</span></td>'
+      +'<td><span class="hist-tag">'+xe(r.campaign||'—')+'</span></td>'
+      +'<td><span class="hist-tag">'+xe(r.content||'—')+'</span></td>'
+      +'<td class="hist-url-cell" title="'+xe(r.full||'')+'">'+xe(shortUrl)+'</td>'
+      +'<td class="hist-date">'+xe(r.ts||'—')+'</td>'
+      +'<td><div class="hist-row-actions">'
+        +'<button class="hist-copy-btn" onclick="hCopy(this)" data-url="'+xe(r.full||'')+'">Copy</button>'
+        +'<button class="hist-del-btn" title="Delete" onclick="hDel(this)" data-id="'+xe(r.id||'')+'">'
+          +'<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>'
+        +'</button>'
+      +'</div></td>'
+      +'</tr>';
+  }
+  body.innerHTML='<div style="overflow-x:auto"><table class="hist-table">'
+    +'<thead><tr><th>#</th><th>Author</th><th>Source</th><th>Medium</th><th>Campaign</th><th>Content</th><th>URL</th><th>Date</th><th></th></tr></thead>'
+    +'<tbody>'+rows+'</tbody></table></div>';
+}
+
+function xe(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+function hCopy(btn){
+  var url=btn.getAttribute('data-url')||'';
+  navigator.clipboard.writeText(url).catch(function(){});
+  var orig=btn.textContent;btn.textContent='Copied!';
+  setTimeout(function(){btn.textContent=orig},1500);
+}
+
+function hDel(btn){
+  var id=btn.getAttribute('data-id')||'';
+  var pfx=btn.closest('.hist-card').id.replace('-hist-card','');
+  putHistory(getHistory().filter(function(r){return r.id!==id}));
+  drawHistory(pfx);
+}
+
+function clearHistory(pfx){
+  if(!confirm('Clear all '+pfx+' link history?'))return;
+  putHistory(getHistory().filter(function(r){return r.tab!==pfx}));
+  drawHistory(pfx);
+}
+
+function exportHistory(pfx){
+  var arr=getHistory().filter(function(r){return r.tab===pfx});
+  if(!arr.length){alert('No links to export.');return;}
+  var hdr=['#','Author','Source','Medium','Campaign','Content','URL','Date'];
+  var lines=arr.map(function(r,i){
+    return[i+1,r.author||'',r.source||'',r.medium||'',r.campaign||'',r.content||'',r.full||'',r.ts||'']
+      .map(function(v){return'"'+String(v).replace(/"/g,'""')+'"'}).join(',');
+  });
+  var csv=hdr.join(',')+'\n'+lines.join('\n');
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download='monzo_utm_'+pfx+'.csv';a.click();
+}
+
+function saveAuthor(){
+  var v=(document.getElementById('global-author')||{}).value||'';
+  try{localStorage.setItem('monzo_utm_author',v)}catch(e){}
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  try{var v=localStorage.getItem('monzo_utm_author');if(v){var el=document.getElementById('global-author');if(el)el.value=v;}}catch(e){}
+  ['p','e','s','ev','pd'].forEach(function(pfx){updateProgress(pfx);drawHistory(pfx)});
+});
+</script>
+</body>
+</html>
